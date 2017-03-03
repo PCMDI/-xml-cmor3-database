@@ -82,7 +82,6 @@ GridHeaderJSON = """
                 "data_specs_version": "<data_specs_version>",
                 "table_id": "Table grids",
                 "cmor_version":  "<cmorVersion>",
-                "cf_version":    "<cfVersion>",
                 "table_date":    "<tableDate>",
                 "missing_value": "<missingValue>",
                 "baseURL": "http://cmip-pcmdi.llnl.gov/CMIP6/dataLocation",
