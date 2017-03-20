@@ -8,8 +8,8 @@
         "table_date": "20 March 2017", 
         "missing_value": "1e20", 
         "product": "output", 
-        "approx_interval": "", 
-        "generic_levels": "", 
+        "approx_interval": "0.00000", 
+        "generic_levels": "alevel olevel", 
         "mip_era": "CMIP6", 
         "Conventions": "CF-1.6 CMIP-6.0"
     }, 

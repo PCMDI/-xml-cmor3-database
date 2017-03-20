@@ -453,8 +453,7 @@ for child in axes.getchildren():
         requested  = ""
 
     if child.get('boundsValues'):
-        pdb.set_trace()
-        bounds_values = str([float(x) for x in child.get('boundsValues').split()] )
+        bounds_values = str([float(x.replace(",","")) for x in child.get('boundsValues').split()] )
         # convert list into string of values
         # -----------------------------------
         bounds_values = " ".join(str(value) for value in eval(bounds_values))
@@ -520,7 +519,7 @@ for child in grid.getchildren():
             boundsRequested   = ""
 
         if child.get('boundsValues'):
-            boundsValues  = str([float(x) for x in child.get('boundsValues').split()] )
+            boundsValues  = str([float(x.replace(",","")) for x in child.get('boundsValues').split()] )
         else:
             boundsValues  = ""
         coords                = child.get('coords') or ""

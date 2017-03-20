@@ -131,6 +131,10 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "alevel alevhalf",
                         "frequency"      : "mon"
                       },
+            "AERmon": { "approxInterval" : "30.00000", 
+                        "genericLevels"  : "alevel",
+                        "frequency"      : "mon"
+                      },
               "Lmon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "",
                         "frequency"      : "mon"
@@ -139,7 +143,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "",
                         "frequency"      : "mon"
                       },
-              "cfMon": { "approxInterval" : "30.00000",
+              "CFmon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "alevel alevhalf",
                         "frequency"      : "mon"
                       },
@@ -171,7 +175,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "",
                         "frequency"      : "day"
                       },
-              "cfDay":  { "approxInterval" : "1.00000",
+             "CFday":  { "approxInterval" : "1.00000",
                         "genericLevels"  : "alevel alevhalf",
                         "frequency"      : "day"
                       },
@@ -179,23 +183,51 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "",
                         "frequency"      : "day"
                       },
-              "cf3hr":  { "approxInterval" : "0.125000",
+            "E3hrPt":  { "approxInterval" : "0.125000",
+                        "genericLevels"  : "alevel",
+                        "frequency"      : "3hr"
+                      },
+       "E1hrClimMon":  { "approxInterval" : "0.017361",
                         "genericLevels"  : "",
+                        "frequency"      : "1hr"
+                      },
+             "E1hr":  { "approxInterval" : "0.017361",
+                        "genericLevels"  : "",
+                        "frequency"      : "1hr"
+                      },
+             "E3hr":  { "approxInterval" : "0.125000",
+                        "genericLevels"  : "alevel",
+                        "frequency"      : "3hr"
+                      },
+            "CF3hr":  { "approxInterval" : "0.125000",
+                        "genericLevels"  : "alevel alevhalf",
                         "frequency"      : "3hr"
                       },
               "3hr":  { "approxInterval" : "0.125000",
                         "genericLevels"  : "",
                         "frequency"      : "3hr"
                       },
-              "6hrLev":  { "approxInterval" : "0.250000",
+            "E6hrZ":  { "approxInterval" : "0.250000",
                         "genericLevels"  : "alevel",
-                        "frequency"      : "3hr"
+                        "frequency"      : "6hr"
                       },
-              "6hrPlev":  { "approxInterval" : "0.250000",
+           "6hrLev":  { "approxInterval" : "0.250000",
+                        "genericLevels"  : "alevel",
+                        "frequency"      : "6hr"
+                      },
+          "6hrPlev":  { "approxInterval" : "0.250000",
                         "genericLevels"  : "",
-                        "frequency"      : "3hr"
+                        "frequency"      : "6hr"
                       },
-              "subhr": { "approxInterval" : "0.017361",
+           "CFsubhr": { "approxInterval" : "0.017361",
+                        "genericLevels"  : "alevel alevhalf",
+                        "frequency"      : "subhr"
+                      },
+            "Esubhr": { "approxInterval" : "0.017361",
+                        "genericLevels"  : "alevel",
+                        "frequency"      : "subhr"
+                      },
+             "subhr": { "approxInterval" : "0.017361",
                         "genericLevels"  : "alevel alevhalf",
                         "frequency"      : "subhr"
                       },
@@ -204,6 +236,30 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                            "approxIntervalWarning":  "0.25",
                            "approxIntervalError":  "0.75",
                            "frequency"      : "subhr"
+                      },
+             "IyrGre": { "approxInterval" : "365.00",
+                            "genericLevels"  : "",
+                            "frequency"      : "yr"
+                      },
+             "IyrAnt": { "approxInterval" : "365.00",
+                            "genericLevels"  : "",
+                            "frequency"      : "yr"
+                      },
+             "ImonGre": { "approxInterval" : "30.00",
+                            "genericLevels"  : "",
+                            "frequency"      : "mon"
+                      },
+             "ImonAnt": { "approxInterval" : "30.00",
+                            "genericLevels"  : "",
+                            "frequency"      : "mon"
+                      },
+             "Eyr": { "approxInterval" : "365",
+                            "genericLevels"  : "alevel olevel",
+                            "frequency"      : "yr"
+                      },
+             "Efx": { "approxInterval" : "0.00000",
+                            "genericLevels"  : "alevel olevel",
+                            "frequency"      : "fx"
                       },
               "fx": { "approxInterval" : "0.00000",
                             "genericLevels"  : "olevel",
@@ -273,7 +329,11 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                                     "genericLevels"  : "",
                                     "frequency"      : "3hr"
                         },
-              "emDay": { "approxInterval" : "1.00000",
+             "EdayZ": { "approxInterval" : "1.00000",
+                                    "genericLevels"  : "",
+                                    "frequency"      : "day"
+                       },
+              "Eday": { "approxInterval" : "1.00000",
                                     "genericLevels"  : "",
                                     "frequency"      : "day"
                        },
@@ -289,8 +349,12 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                                     "genericLevels"  : "",
                                     "frequency"      : "fx"
                        },
-            "emMon": { "approxInterval" : "30.00000",
-                                    "genericLevels"  : "",
+           "EmonZ": { "approxInterval" : "30.00000",
+                                    "genericLevels"  : "alevel olevel",
+                                    "frequency"      : "mon"
+                       },
+            "Emon": { "approxInterval" : "30.00000",
+                                    "genericLevels"  : "alevel olevel",
                                     "frequency"      : "mon"
                        },
             "emMonclim":{ "approxInterval" : "30.00000",
