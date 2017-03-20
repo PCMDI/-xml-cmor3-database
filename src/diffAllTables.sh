@@ -8,7 +8,7 @@ for realm in $(${SQLITE3} "${CMIP6DB}" \
           'select distinct mipTable from CMORvar'); do                                                                                   
     filename="CMIP6_${realm}.json"                                                                                                             
     echo $filename
-    diff /tmp/$filename .
+    kdiff3 /tmp/$filename .
 done
 cmd="diff /tmp/CMIP6_coordinate.json ."
 echo $cmd

@@ -453,6 +453,7 @@ for child in axes.getchildren():
         requested  = ""
 
     if child.get('boundsValues'):
+        pdb.set_trace()
         bounds_values = str([float(x) for x in child.get('boundsValues').split()] )
         # convert list into string of values
         # -----------------------------------
