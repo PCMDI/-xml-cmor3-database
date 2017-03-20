@@ -29,7 +29,7 @@ def replaceString(var_entry, var, field):
     """
        Replace a <field> with a string (deleting "<" and ">")
     """
-    if(var == ''):
+    if( (var == '') and  (field != 'comment') ):
         var_entry = re.sub(r"" + field + ":.*\n", "", var_entry)
     var_entry = var_entry.replace("<" + field + ">", var)
     return var_entry
