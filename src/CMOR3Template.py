@@ -11,12 +11,12 @@ HeaderJSON = """
                     "cmor_version":     "<cmorVersion>",
                     "table_date":       "<tableDate>",
                     "missing_value":    "<missingValue>",
-                    "product":          "output",
+                    "product":          "model-output",
                     "approx_interval":  "<approxInterval>",
                     <DUMMYENTRY>
                     "generic_levels":   "<generic_levels>",
                     "mip_era":          "CMIP6",
-                    "Conventions":      "CF-1.6 CMIP-6.0"
+                    "Conventions":      "CF-1.7 CMIP-6.0"
               },
 """
 
