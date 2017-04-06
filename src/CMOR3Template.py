@@ -84,7 +84,6 @@ GridHeaderJSON = """
                 "cmor_version":  "<cmorVersion>",
                 "table_date":    "<tableDate>",
                 "missing_value": "<missingValue>",
-                "baseURL": "http://cmip-pcmdi.llnl.gov/CMIP6/dataLocation",
                 "product": "output",
                 "Conventions":      "CF-1.6 CMIP-6.0"
              },
