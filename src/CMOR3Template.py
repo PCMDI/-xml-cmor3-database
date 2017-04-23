@@ -85,7 +85,7 @@ GridHeaderJSON = """
                 "table_date":    "<tableDate>",
                 "missing_value": "<missingValue>",
                 "product": "output",
-                "Conventions":      "CF-1.6 CMIP-6.0"
+                "Conventions":      "CF-1.7 CMIP-6.0"
              },
 
     "mapping_entry": {
