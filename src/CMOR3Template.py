@@ -228,7 +228,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                             "genericLevels"  : "alevel olevel"
                       },
               "fx": { "approxInterval" : "0.00000",
-                            "genericLevels"  : "olevel"
+                            "genericLevels"  : "alevel"
                       },
               "6hrPlevpt": { "approxInterval" : "0.250000",
                             "genericLevels"  : ""

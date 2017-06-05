@@ -471,6 +471,8 @@ for child in axes.getchildren():
     z_bounds_factors   = ""
     z_factors          = ""
     climatology        = ""
+    if name == 'time2':
+        climatology        = "yes"
     formula            = ""
                         
     cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
