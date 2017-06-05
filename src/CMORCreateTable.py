@@ -309,7 +309,7 @@ def createVariables(bJSON=True):
             dimensions = dimensions + var[19].strip(" ") + " "
         dimensions = dimensions.strip(" ")
         var_entry = var_entry.replace("<dimensions>",dimensions)
-        var_entry = var_entry.replace("<outname>", var[0])
+        var_entry = var_entry.replace("<outname>", var[22])
         var_entry = var_entry.replace("<type>", var[15])
     if(bJSON):
         var_entry = var_entry + "\"Dummy\":   \"\"\n }"

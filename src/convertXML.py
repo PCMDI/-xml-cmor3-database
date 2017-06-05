@@ -577,13 +577,19 @@ var = root.findall('./{0}main/{0}var'.format(namespace))[0]
 print "Create var"
 for child in var.getchildren():
     description = child.get('description').replace("'", "\"")  or ""
-    vid         = child.get('id').replace('\'','')           or ""
+    try: 
+        vid     = child.get('id').replace('\'','')           or ""
+    except:
+        vid     = child.get('label').replace('\'','')           or ""
     label       = child.get('label')        or ""
     proComment  = child.get('proComment')   or ""
     proNote     = child.get('pronote')      or ""
     prov        = child.get('prov')         or ""
     sn          = child.get('sn')           or ""
-    title       = child.get('title').replace("'", "\"")        or ""
+    try:
+        title   = child.get('title').replace("'", "\"")        or ""
+    except:
+        title   = ""
     uid         = child.get('uid').replace('\'','')          or ""
     units       = child.get('units')        or ""
 
@@ -691,12 +697,18 @@ print "Create structure"
 for child in structure.getchildren():
     cell_measures   = child.get('cell_measures').replace('None', '')   or ""
     cell_methods    = child.get('cell_methods').replace('None', '')    or ""
-    coords          = child.get('coords').replace('None', '')          or ""
+    try:
+        coords          = child.get('coords').replace('None', '')          or ""
+    except:
+        coords      = ""
     description     = child.get('description').replace('None', '')     or ""
     flag_meanings   = child.get('flag_meanings').replace('None', '')   or ""
     flag_values     = child.get('flag_values').replace('None', '')     or ""
     label           = child.get('label').replace('None', '')           or ""
-    odims           = child.get('odims').replace('None', '')           or ""
+    try:
+        odims           = child.get('odims').replace('None', '')           or ""
+    except:
+        odims       = ""
     procNote        = child.get('procNote').replace('None', '')        or ""
     prov            = child.get('prov').replace('None', '')            or ""
     spid            = child.get('spid').replace('None', '')            or ""
