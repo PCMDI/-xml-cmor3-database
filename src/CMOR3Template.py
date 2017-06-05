@@ -7,7 +7,6 @@ HeaderJSON = """
                     "data_specs_version": "<data_specs_version>",
                     "table_id":         "Table <table>",
                     "realm":            "<modeling_realm>",
-                    "frequency":        "<frequency>",
                     "cmor_version":     "<cmorVersion>",
                     "table_date":       "<tableDate>",
                     "missing_value":    "<missingValue>",
@@ -55,6 +54,7 @@ FormulaVarTemplateJSON = """
 
 VarTemplateJSON = """
 "<variable_entry>": {
+                        "frequency":         "<frequency>",
                         "modeling_realm":    "<modeling_realm>",
                         "standard_name":     "<standard_name>",
                         "units":             "<units>",
@@ -160,7 +160,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
                       },
               "Oday":  { "approxInterval" : "1.00000",
-                        "genericLevels"  : ""
+                        "genericLevels"  : "olevel"
                       },
              "CFday":  { "approxInterval" : "1.00000",
                         "genericLevels"  : "alevel alevhalf",
@@ -301,6 +301,12 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                        },
             "emMonpt": { "approxInterval" : "30.00000",
                                     "genericLevels"  : ""
+                       },
+            "Ofx": { "approxInterval" : "0.00000",
+                                    "genericLevels"  : "olevel"
+                       },
+            "Odec": { "approxInterval" : "3650.00000",
+                                    "genericLevels"  : "olevel"
                        },
             "emMonZ":  { "approxInterval" : "30.00000",
                                     "genericLevels"  : ""

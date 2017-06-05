@@ -1257,6 +1257,7 @@ for axis in cmor2.axis_entry.keys():
     bounds_values      = cmor2.axis_entry.__getattribute__(axis).__getattribute__('bounds_values')    \
                            if ('bounds_values' in cmor2.axis_entry.__getattribute__(axis).keys())        else ""
 
+    print name
     cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
     c.execute(cmd)
     results = c.fetchall()
