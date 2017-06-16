@@ -301,10 +301,11 @@ def createVariables(bJSON=True):
             var_entry = replaceString(var_entry, var[21], "flag_meanings")
 
 
-        dimensions = var[9].replace("|", " ") + " " 
+        dimensions = var[9].replace("|", " ").strip(" ") + " " 
         if( var[18] != "" ):
             dimensions = dimensions + var[18].strip(" ") + " "
-        dimensions = dimensions + var[10].replace("|", " ").strip(" ") + " "
+        if( var[10] != "" ):
+            dimensions = dimensions + var[10].replace("|", " ").strip(" ") + " "
         if( var[19] != "" ):
             dimensions = dimensions + var[19].strip(" ") + " "
         dimensions = dimensions.strip(" ")

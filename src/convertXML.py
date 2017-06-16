@@ -471,7 +471,7 @@ for child in axes.getchildren():
     z_bounds_factors   = ""
     z_factors          = ""
     climatology        = ""
-    if name == 'time2':
+    if (name == 'time2') or (name == 'time3'):
         climatology        = "yes"
     formula            = ""
                         
@@ -548,7 +548,6 @@ for child in grid.getchildren():
         uid                   = child.get('uid') or ""
         units                 = child.get('units') or ""
         value                 = child.get('value') or ""
-
         cmd = """ insert into grid values (""" + \
              "'" + altLabel        + "'" + """, """ + \
              "'" + axis            + "'" + """, """ + \
@@ -1390,7 +1389,7 @@ for var in gridVar:
                  "''" + """, """ + \
                  "''" + """, """ + \
                  "''" + """, """ + \
-                 "''" + """, """ + \
+                 "'" + name        + "'" + """, """ + \
                  "''" + """, """ + \
                  "'" + vid.replace('\'','')       + "'" + """, """  \
                  "'" + units      + "'" + """) """
