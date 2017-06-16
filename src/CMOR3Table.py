@@ -410,7 +410,8 @@ class CMOR3Table:
                                 st.odims,
                                 st.coords,
                                 st.flag_values,
-                                st.flag_meanings
+                                st.flag_meanings,
+                                vv.label
                 from spatialShape ss,
                     temporalShape ts,
                     structure st,

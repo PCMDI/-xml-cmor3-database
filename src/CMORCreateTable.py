@@ -84,10 +84,10 @@ def createHeader(realm="Amon", bJSON=True):
     Header = replaceString(Header, genericLevels,        "generic_levels")
     try: 
         Header = Header.replace("<modeling_realm>", varSQL[2][3])
-        Header = Header.replace("<frequency>", varSQL[2][1])
+#        Header = Header.replace("<frequency>", varSQL[2][1])
     except:
         Header = Header.replace("<modeling_realm>", varSQL[0][3])
-        Header = Header.replace("<frequency>", varSQL[0][1])
+#        Header = Header.replace("<frequency>", varSQL[0][1])
     Header = replaceString(Header, "",  "DUMMYENTRY")
     return Header
 
@@ -276,6 +276,7 @@ def createVariables(bJSON=True):
         if(var[16] == 'unset'):
             var[16] = ''
         var_entry = replaceString(var_entry, var[0],  "variable_entry")
+        var_entry = replaceString(var_entry, var[1],  "frequency")
         var_entry = replaceString(var_entry, var[3],  "modeling_realm")
         var_entry = replaceString(var_entry, var[14], "standard_name")
         var_entry = replaceString(var_entry, var[13], "units")
@@ -300,15 +301,16 @@ def createVariables(bJSON=True):
             var_entry = replaceString(var_entry, var[21], "flag_meanings")
 
 
-        dimensions = var[9].replace("|", " ") + " " 
+        dimensions = var[9].replace("|", " ").strip(" ") + " " 
         if( var[18] != "" ):
             dimensions = dimensions + var[18].strip(" ") + " "
-        dimensions = dimensions + var[10].replace("|", " ").strip(" ") + " "
+        if( var[10] != "" ):
+            dimensions = dimensions + var[10].replace("|", " ").strip(" ") + " "
         if( var[19] != "" ):
             dimensions = dimensions + var[19].strip(" ") + " "
         dimensions = dimensions.strip(" ")
         var_entry = var_entry.replace("<dimensions>",dimensions)
-        var_entry = var_entry.replace("<outname>", var[0])
+        var_entry = var_entry.replace("<outname>", var[22])
         var_entry = var_entry.replace("<type>", var[15])
     if(bJSON):
         var_entry = var_entry + "\"Dummy\":   \"\"\n }"
