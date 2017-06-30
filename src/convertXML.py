@@ -960,7 +960,8 @@ for child in MIP.getchildren():
              "'" + url    + "'" + """) """
     c.execute(cmd)
 
-for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3" ]:
+#for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3" ]:
+for file in ["CMIP5_formula_CMOR3" ]:
     cmor2 = cfg.Config()
     cmor2.read_file(file)
     # Add formula variables
