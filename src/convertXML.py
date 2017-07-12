@@ -43,6 +43,7 @@ c.execute("""create table formulaVar (
         long_name text,
         type      text,
         dimension text,
+        out_name  text,
         units      text)""")
 
 c.execute("""create table var (
@@ -960,8 +961,7 @@ for child in MIP.getchildren():
              "'" + url    + "'" + """) """
     c.execute(cmd)
 
-#for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3" ]:
-for file in ["CMIP5_formula_CMOR3" ]:
+for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3" ]:
     cmor2 = cfg.Config()
     cmor2.read_file(file)
     # Add formula variables
@@ -997,6 +997,9 @@ for file in ["CMIP5_formula_CMOR3" ]:
         units     = cmor2.variable_entry.__dict__[var].units                \
                         if ('units' in
                             cmor2.variable_entry.__dict__[var].keys()) else ""
+        out_name     = cmor2.variable_entry.__dict__[var].out_name          \
+                        if ('out_name' in
+                            cmor2.variable_entry.__dict__[var].keys()) else ""
 
         cmd = """select name from formulaVar where name = '""" + str(name).strip() + "';"
         c.execute(cmd)
@@ -1007,6 +1010,7 @@ for file in ["CMIP5_formula_CMOR3" ]:
                   "'" + str(long_name)         + "'" + """, """ \
                   "'" + str(ctype)             + "'" + """, """ \
                   "'" + str(dimension)         + "'" + """, """ \
+                  "'" + str(out_name)         + "'" + """, """ \
                   "'" + str(units)             + "'" + """) """
 
         c.execute(cmd)
