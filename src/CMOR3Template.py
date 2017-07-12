@@ -48,6 +48,7 @@ FormulaVarTemplateJSON = """
                         "long_name":   "<long_name>",
                         "units":       "<units>",
                         "dimensions":  "<dimensions>",
+                        "out_name":    "<out_name>",
                         "type":        "<type>"
                     },
 """

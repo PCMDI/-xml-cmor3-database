@@ -169,7 +169,7 @@ def createFormulaVar(bJSON=True):
     formulaVars = cursor.getFormulaVars()
 
     if(bJSON):
-        var_entry = "\"variable_entry\": {"
+        var_entry = "\"formula_entry\": {"
     else:
         var_entry = ""
 
@@ -187,6 +187,7 @@ def createFormulaVar(bJSON=True):
         var_entry = replaceString(var_entry, fvar[1], "long_name")
         var_entry = replaceString(var_entry, fvar[2], "type")
         var_entry = replaceString(var_entry, fvar[3].strip(), "dimensions")
+        var_entry = replaceString(var_entry, fvar[3].strip(), "out_name")
         var_entry = replaceString(var_entry, fvar[4], "units")
 
     return var_entry
@@ -424,8 +425,8 @@ def main(argv):
             formulavar_entry  = createFormulaVar(bJSON=bJSON)
             formulavar_entry = formulavar_entry + "\"Dummy\":   \"\"\n }"
             CMIP6Table = (json.loads("".join("{" + formulavar_entry + "}"), object_pairs_hook=OrderedDict))
-            if("Dummy" in CMIP6Table['variable_entry']):
-                del CMIP6Table['variable_entry']['Dummy']
+            if("Dummy" in CMIP6Table['formula_entry']):
+                del CMIP6Table['formula_entry']['Dummy']
             print(json.dumps(CMIP6Table, indent=4))
 
     else:
