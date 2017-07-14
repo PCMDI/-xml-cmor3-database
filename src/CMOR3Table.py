@@ -317,6 +317,7 @@ class CMOR3Table:
                                   fv.long_name,
                                   fv.type,
                                   fv.dimension,
+                                  fv.out_name,
                                   fv.units
                  from formulaVar fv
             """

@@ -999,8 +999,9 @@ for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR
                             cmor2.variable_entry.__dict__[var].keys()) else ""
         out_name     = cmor2.variable_entry.__dict__[var].out_name          \
                         if ('out_name' in
-                            cmor2.variable_entry.__dict__[var].keys()) else ""
+                            cmor2.variable_entry.__dict__[var].keys()) else name
 
+        print out_name
         cmd = """select name from formulaVar where name = '""" + str(name).strip() + "';"
         c.execute(cmd)
         results = c.fetchall()
@@ -1135,6 +1136,8 @@ for file in files:
                         if ('type' in cmor2.variable_entry.__dict__[var].keys())      else ""
         dimension = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])       \
                         if ('dimensions' in cmor2.variable_entry.__dict__[var].keys()) else ""
+        out_name     = cmor2.variable_entry.__dict__[var].out_name          \
+                        if ('out_name' in cmor2.variable_entry.__dict__[var].keys()) else name
         units     = cmor2.variable_entry.__dict__[var].units                         \
                         if ('units' in cmor2.variable_entry.__dict__[var].keys())     else ""
 
@@ -1147,6 +1150,7 @@ for file in files:
                   "'" + str(long_name)         + "'" + """, """ \
                   "'" + str(ctype)             + "'" + """, """ \
                   "'" + str(dimension)         + "'" + """, """ \
+                  "'" + str(out_name)         + "'" + """, """ \
                   "'" + str(units)             + "'" + """) """
 
             c.execute(cmd)

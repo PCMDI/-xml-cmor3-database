@@ -187,8 +187,8 @@ def createFormulaVar(bJSON=True):
         var_entry = replaceString(var_entry, fvar[1], "long_name")
         var_entry = replaceString(var_entry, fvar[2], "type")
         var_entry = replaceString(var_entry, fvar[3].strip(), "dimensions")
-        var_entry = replaceString(var_entry, fvar[3].strip(), "out_name")
-        var_entry = replaceString(var_entry, fvar[4], "units")
+        var_entry = replaceString(var_entry, fvar[4].strip(), "out_name")
+        var_entry = replaceString(var_entry, fvar[5], "units")
 
     return var_entry
 
