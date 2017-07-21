@@ -658,7 +658,7 @@ for child in CMORvar.getchildren():
     shuffle         = shuffle.replace('None', '')
     stid            = stid.replace('None', '')
     title           = title.replace('None', '')
-    title           = title.replace('\'', '')
+    title           = title.replace('\'', '\'\'')
     vtype           = vtype.replace('None', '')
     uid             = uid.replace('None', '')
     valid_max       = valid_max.replace('None', '')
@@ -687,7 +687,6 @@ for child in CMORvar.getchildren():
          "'" + valid_max       + "'" + """, """ + \
          "'" + valid_min       + "'" + """, """ + \
          "'" + vid.replace('\'','')            + "'" + """) """
-
     c.execute(cmd)
 CMORvar = ""
 
