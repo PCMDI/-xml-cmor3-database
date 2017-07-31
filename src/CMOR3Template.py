@@ -130,8 +130,17 @@ FooterTemplateJSON="""
 tableDict = { "Amon": { "approxInterval" : "30.00000", 
                         "genericLevels"  : "alevel alevhalf"
                       },
+            "AERmonZ": { "approxInterval" : "30.00000", 
+                        "genericLevels"  : "alevel"
+                      },
             "AERmon": { "approxInterval" : "30.00000", 
                         "genericLevels"  : "alevel"
+                      },
+            "AERday": { "approxInterval" : "1.0", 
+                        "genericLevels"  : ""
+                      },
+            "AERhr": { "approxInterval" : "1.0", 
+                        "genericLevels"  : "0.017361"
                       },
               "Lmon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
@@ -231,7 +240,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
               "fx": { "approxInterval" : "0.00000",
                             "genericLevels"  : "alevel"
                       },
-              "6hrPlevpt": { "approxInterval" : "0.250000",
+              "6hrPlevPt": { "approxInterval" : "0.250000",
                             "genericLevels"  : ""
                        },
               "aerannual": { "approxInterval" : "365.00000",
