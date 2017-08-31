@@ -130,8 +130,17 @@ FooterTemplateJSON="""
 tableDict = { "Amon": { "approxInterval" : "30.00000", 
                         "genericLevels"  : "alevel alevhalf"
                       },
+            "AERmonZ": { "approxInterval" : "30.00000", 
+                        "genericLevels"  : "alevel alevhalf"
+                      },
             "AERmon": { "approxInterval" : "30.00000", 
-                        "genericLevels"  : "alevel"
+                        "genericLevels"  : "alevel alevhalf"
+                      },
+            "AERday": { "approxInterval" : "1.0", 
+                        "genericLevels"  : ""
+                      },
+            "AERhr": { "approxInterval" : "1.0", 
+                        "genericLevels"  : "0.017361"
                       },
               "Lmon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
@@ -170,7 +179,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
                       },
             "E3hrPt":  { "approxInterval" : "0.125000",
-                        "genericLevels"  : "alevel",
+                        "genericLevels"  : "alevel alevhalf",
                       },
        "E1hrClimMon":  { "approxInterval" : "0.017361",
                         "genericLevels"  : ""
@@ -179,7 +188,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
                       },
              "E3hr":  { "approxInterval" : "0.125000",
-                        "genericLevels"  : "alevel"
+                        "genericLevels"  : "alevel alevhalf"
                       },
             "CF3hr":  { "approxInterval" : "0.125000",
                         "genericLevels"  : "alevel alevhalf"
@@ -188,10 +197,10 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
                       },
             "E6hrZ":  { "approxInterval" : "0.250000",
-                        "genericLevels"  : "alevel"
+                        "genericLevels"  : "alevel alevhalf"
                       },
            "6hrLev":  { "approxInterval" : "0.250000",
-                        "genericLevels"  : "alevel"
+                        "genericLevels"  : "alevel alevhalf"
                       },
           "6hrPlev":  { "approxInterval" : "0.250000",
                         "genericLevels"  : ""
@@ -200,7 +209,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "alevel alevhalf"
                       },
             "Esubhr": { "approxInterval" : "0.017361",
-                        "genericLevels"  : "alevel"
+                        "genericLevels"  : "alevel alevhalf"
                       },
              "subhr": { "approxInterval" : "0.017361",
                         "genericLevels"  : "alevel alevhalf"
@@ -231,7 +240,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
               "fx": { "approxInterval" : "0.00000",
                             "genericLevels"  : "alevel"
                       },
-              "6hrPlevpt": { "approxInterval" : "0.250000",
+              "6hrPlevPt": { "approxInterval" : "0.250000",
                             "genericLevels"  : ""
                        },
               "aerannual": { "approxInterval" : "365.00000",
