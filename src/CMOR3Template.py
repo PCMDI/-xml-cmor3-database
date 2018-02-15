@@ -10,6 +10,7 @@ HeaderJSON = """
                     "cmor_version":     "<cmorVersion>",
                     "table_date":       "<tableDate>",
                     "missing_value":    "<missingValue>",
+                    "int_missing_value": "-999",
                     "product":          "model-output",
                     "approx_interval":  "<approxInterval>",
                     <DUMMYENTRY>
