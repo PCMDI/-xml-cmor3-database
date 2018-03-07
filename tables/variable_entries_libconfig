@@ -42,6 +42,7 @@ p0: {
 #----------------------------------	
   long_name:       "vertical coordinate formula term: reference pressure"	
   units:           "Pa"	
+  type:            "double"	
 } 
 #----------------------------------	
 #
@@ -56,6 +57,7 @@ ptop: {
 #----------------------------------	
   long_name:       "pressure at top of model"	
   units:           "Pa"	
+  type:            "double"	
 } 
 #----------------------------------	
 #
@@ -181,6 +183,7 @@ ztop: {
 #----------------------------------	
   long_name:       "height of top of model"	
   units:           "m"	
+  type:            "double"	
 } 
 #----------------------------------	
 #
