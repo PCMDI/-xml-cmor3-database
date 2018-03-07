@@ -276,6 +276,13 @@ def createVariables(bJSON=True):
         # -------------------------------------------------------------
         if(var[16] == 'unset'):
             var[16] = ''
+        #####
+        ##### Truncate comments > 1024 characters for CMOR 3.3.1
+        #####
+        if(len(var[16]) > 1023):
+            left = var[16].rfind('.',0,1022)
+            var[16] = var[16][0:left+1] 
+
         var_entry = replaceString(var_entry, var[0],  "variable_entry")
         var_entry = replaceString(var_entry, var[1],  "frequency")
         var_entry = replaceString(var_entry, var[3],  "modeling_realm")
