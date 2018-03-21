@@ -5,9 +5,9 @@ HeaderJSON = """
 {
     "Header":{
                     "data_specs_version": "<data_specs_version>",
+                    "cmor_version":     "<cmorVersion>",
                     "table_id":         "Table <table>",
                     "realm":            "<modeling_realm>",
-                    "cmor_version":     "<cmorVersion>",
                     "table_date":       "<tableDate>",
                     "missing_value":    "<missingValue>",
                     "int_missing_value": "-999",
