@@ -9,7 +9,7 @@ import getopt
 import packageConfig
 import pdb
 
-cmorVersion = "3.2"
+cmorVersion = "3.3"
 data_specs_version = packageConfig.__version__
 cfVersion = "1.6"
 activityID = "CMIP6"
