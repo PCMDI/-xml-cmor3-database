@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 
 # sqlite> select DISTINCT vg.label from requestVar vg, requestVarGroup rvg, requestItem ri, requestLink rl where  ri.mip="GeoMIP" and ri.rlid==rl.uid and rl.refid=rvg.uid and vg.vid=rvg.uid;
 import sqlite3
