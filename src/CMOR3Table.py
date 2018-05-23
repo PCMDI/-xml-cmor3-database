@@ -589,7 +589,8 @@ class CMOR3Table:
                         value,
                         z_bounds_factors,
                         z_factors,
-                        bounds_values
+                        bounds_values,
+                        generic_level_name
                  from axisEntry
                  where origin != 'grid'
               UNION
@@ -613,7 +614,8 @@ class CMOR3Table:
                         value,
                         "",
                         "",
-                        boundsValues
+                        boundsValues,
+                        generic_level_name
                  from grid   
                  where type != 'character' and 
                        isIndex != 'ok' and 

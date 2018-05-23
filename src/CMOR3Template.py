@@ -41,7 +41,8 @@ axisTemplateJSON = """
                     "value":            "<value>",
                     "z_bounds_factors": "<z_bounds_factors>",
                     "z_factors":        "<z_factors>",
-                    "bounds_values":    "<bounds_values>"
+                    "bounds_values":    "<bounds_values>",
+                    "generic_level_name": "<generic_level_name>"
                 },
 """
 FormulaVarTemplateJSON = """
@@ -388,6 +389,7 @@ valid_min:        <valid_min>
 value:            <value>
 z_bounds_factors: <z_bounds_factors>
 z_factors:        <z_factors>
+generic_level_name: <generic_level_name>
 """
 
 

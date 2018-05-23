@@ -154,6 +154,7 @@ def createAxes(bJSON=True):
         axis_entry = replaceString(axis_entry, axis[18], "z_bounds_factors")
         axis_entry = replaceString(axis_entry, axis[19], "z_factors")
         axis_entry = replaceString(axis_entry, axis[20], "bounds_values")
+        axis_entry = replaceString(axis_entry, axis[21], "generic_level_name")
     if(bJSON):
         axis_entry = axis_entry + "\"Dummy\": \"\"\n}"
     return axis_entry

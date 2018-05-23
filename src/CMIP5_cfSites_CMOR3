@@ -193,6 +193,7 @@ axis_entries:{  time1: {
   formula:          "z = a*ztop + b1*zsurf1 + b2*zsurf2"	
   z_factors:        "a: a b1: b1 b2: b2 ztop: ztop zsurf1: zsurf1 zsurf2: zsurf2"	
   z_bounds_factors: "a: a_bnds b1: b1_bnds b2: b2_bnds ztop: ztop zsurf1: zsurf1 zsurf2: zsurf2"	
+  generic_level_name: "alevel"
 #----------------------------------	
 #
 #============
@@ -223,6 +224,7 @@ axis_entries:{  time1: {
   formula:          "p = p0 * exp(-lev)"	
   z_factors:        "p0: p0 lev: lev"	
   z_bounds_factors: "p0: p0 lev: lev_bnds"	
+  generic_level_name: "alevel"
 #----------------------------------	
 #
 #============
@@ -253,6 +255,7 @@ axis_entries:{  time1: {
   formula:          "p = ptop + sigma*(ps - ptop)"	
   z_factors:        "ptop: ptop sigma: lev ps: ps"	
   z_bounds_factors: "ptop: ptop sigma: lev_bnds ps: ps"	
+  generic_level_name: "alevel"
 #----------------------------------	
 #
 #
@@ -283,6 +286,7 @@ axis_entries:{  time1: {
   formula:          "p = a*p0 + b*ps"	
   z_factors:        "p0: p0 a: a b: b ps: ps"	
   z_bounds_factors: "p0: p0 a: a_bnds b: b_bnds ps: ps"	
+  generic_level_name: "alevel"
 #----------------------------------		
 #
 #
@@ -315,6 +319,7 @@ axis_entries:{  time1: {
   formula:          "p = ap + b*ps"	
   z_factors:        "ap: ap b: b ps: ps"	
   z_bounds_factors: "ap: ap_bnds b: b_bnds ps: ps"	
+  generic_level_name: "alevel"
 #----------------------------------		
 #
 #
@@ -346,6 +351,7 @@ axis_entries:{  time1: {
   formula:          "z = a + b*orog"	
   z_factors:        "a: lev b: b orog: orog"	
   z_bounds_factors: "a: lev_bnds b: b_bnds orog: orog"	
+  generic_level_name: "alevel"
 #----------------------------------		
 #
 # ***************************************************************

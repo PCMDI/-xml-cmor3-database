@@ -216,6 +216,7 @@ c.execute(""" create table axisEntry (
     z_bounds_factors text,
     z_factors text,
     bounds_values text,
+    generic_level_name text,
     origin text)""")
 
 c.execute(""" create table expIDs (
@@ -286,7 +287,8 @@ c.execute(""" create table grid (
     type text,
     uid text,
     units text,
-    value text
+    value text,
+    generic_level_name text
 )""")
 
 
@@ -472,6 +474,7 @@ for child in axes.getchildren():
     z_bounds_factors   = ""
     z_factors          = ""
     climatology        = ""
+    generic_level_name = ""
     if (name == 'time2') or (name == 'time3'):
         climatology        = "yes"
     formula            = ""
@@ -502,6 +505,7 @@ for child in axes.getchildren():
               "'" + str(z_bounds_factors)  + "'" + """, """ \
               "'" + str(z_factors)         + "'" + """, """ \
               "'" + str(bounds_values)     + "'" + """, """ \
+              "'" + str(generic_level_name)     + "'" + """, """ \
               "'" + "XML"                  + "'" + """) """
         c.execute(cmd)
 axes=""
@@ -549,6 +553,8 @@ for child in grid.getchildren():
         uid                   = child.get('uid') or ""
         units                 = child.get('units') or ""
         value                 = child.get('value') or ""
+        generic_level_name    = child.get('generic_level_name') or ""
+
         cmd = """ insert into grid values (""" + \
              "'" + altLabel        + "'" + """, """ + \
              "'" + axis            + "'" + """, """ + \
@@ -570,7 +576,8 @@ for child in grid.getchildren():
              "'" + itype           + "'" + """, """ + \
              "'" + uid.replace('\'','')             + "'" + """, """ + \
              "'" + units           + "'" + """, """ + \
-             "'" + value + "'" + """) """
+             "'" + value + "'" + """, """ + \
+             "'" + generic_level_name + "'" + """) """
         c.execute(cmd)
 grid = ""
 
@@ -1201,6 +1208,8 @@ for file in files:
                                if ('z_factors' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
         bounds_values      = cmor2.axis_entries.__getattribute__(axis).__getattribute__('bounds_values')    \
                                if ('bounds_values' in cmor2.axis_entries.__getattribute__(axis).keys())        else ""
+        generic_level_name = cmor2.axis_entries.__getattribute__(axis).__getattribute__('generic_level_name')    \
+                               if ('generic_level_name' in cmor2.axis_entries.__getattribute__(axis).keys())        else "" 
 
         cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
         c.execute(cmd)
@@ -1229,6 +1238,7 @@ for file in files:
                   "'" + str(z_bounds_factors)  + "'" + """, """ \
                   "'" + str(z_factors)         + "'" + """, """ \
                   "'" + str(bounds_values)         + "'" + """, """ \
+                  "'" + str(generic_level_name)         + "'" + """, """ \
                   "'" + str(tkFile)            + "'" + """) """
             c.execute(cmd)
 
@@ -1277,8 +1287,7 @@ for axis in cmor2.axis_entry.keys():
                            if ('z_factors' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
     bounds_values      = cmor2.axis_entry.__getattribute__(axis).__getattribute__('bounds_values')    \
                            if ('bounds_values' in cmor2.axis_entry.__getattribute__(axis).keys())        else ""
-
-    print name
+    generic_level_name = ""
     cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
     c.execute(cmd)
     results = c.fetchall()
@@ -1306,6 +1315,7 @@ for axis in cmor2.axis_entry.keys():
               "'" + str(z_bounds_factors)  + "'" + """, """ \
               "'" + str(z_factors)         + "'" + """, """ \
               "'" + str(bounds_values)         + "'" + """, """ \
+              "'" + str(generic_level_name)         + "'" + """, """ \
               "'grid') """
         c.execute(cmd)
 
