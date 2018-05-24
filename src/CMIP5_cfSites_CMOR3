@@ -197,6 +197,39 @@ axis_entries:{  time1: {
 #----------------------------------	
 #
 #============
+    }, smooth_level_half: {
+#============
+#
+# This coordinate is a hybrid height coordinate with units of meters (m).
+#  It increases upward.
+#  The values of a(k)*ztop, which appear in the formula below, should be stored as smooth_level. 
+#  Note that in the netCDF file the variable will be named "lev", not smooth_level.
+#
+#------------
+#
+# Axis attributes:
+#----------------------------------	
+  standard_name:    "atmosphere_sleve_coordinate"	
+  units:            "m"	
+  axis:             "Z"	
+  positive:"	      up"	
+  long_name:        "atmosphere smooth level vertical (SLEVE) coordinate"	
+#----------------------------------	
+#
+# Additional axis information:
+#----------------------------------	
+  out_name:         "lev"	
+  must_have_bounds: "no"	
+  stored_direction: "increasing"	
+  valid_min:        -200.	
+  valid_max:        800000.	
+  formula:          "z = a*ztop + b1*zsurf1 + b2*zsurf2"	
+  z_factors:        "a: a b1: b1 b2: b2 ztop: ztop zsurf1: zsurf1 zsurf2: zsurf2"	
+  z_bounds_factors: "a: a_bnds b1: b1_bnds b2: b2_bnds ztop: ztop zsurf1: zsurf1 zsurf2: zsurf2"	
+  generic_level_name: "alevhalf"
+#----------------------------------	
+#
+#============
     }, natural_log_pressure: {
 #============
 #
@@ -225,6 +258,37 @@ axis_entries:{  time1: {
   z_factors:        "p0: p0 lev: lev"	
   z_bounds_factors: "p0: p0 lev: lev_bnds"	
   generic_level_name: "alevel"
+#----------------------------------	
+#
+#============
+    }, natural_log_pressure_half: {
+#============
+#
+#This coordinate is dimensionless and varies from near 0 at the surface and increases upward.
+#  The values of lev(k), which appears in the formula below, should be stored as natural_log_pressure.  
+#  Note that in the netCDF file the variable will be named "lev", not natural_log_pressure.
+#
+#------------
+#
+# Axis attributes:
+#----------------------------------	
+  standard_name:    "atmosphere_ln_pressure_coordinate"	
+  axis:             "Z"	
+  long_name:        "atmosphere natural log pressure coordinate"	
+  positive:"	      down"	
+#----------------------------------	
+#
+# Additional axis information:
+#----------------------------------	
+  out_name:         "lev"	
+  must_have_bounds: "no"	
+  stored_direction: "decreasing"	
+  valid_min:        -1.	
+  valid_max:        20.	
+  formula:          "p = p0 * exp(-lev)"	
+  z_factors:        "p0: p0 lev: lev"	
+  z_bounds_factors: "p0: p0 lev: lev_bnds"	
+  generic_level_name: "alevhalf"
 #----------------------------------	
 #
 #============
@@ -260,6 +324,38 @@ axis_entries:{  time1: {
 #
 #
 #============
+    }, standard_sigma_half: {
+#============
+#
+# This coordinate is dimensionless and varies from 0 at the model top to 1.0 at the surface.
+#  The values of sigma(k), which appears in the formula below, should be stored as standard_sigma.  
+#  Note that in the netCDF file the variable will be named "lev", not standard_sigma.
+#
+#------------
+#
+# Axis attributes:
+#----------------------------------	
+  standard_name:    "atmosphere_sigma_coordinate"	
+  axis:             "Z"	
+  positive:         "down"	
+  long_name:        "sigma coordinate"	
+#----------------------------------	
+#
+# Additional axis information:
+#----------------------------------	
+  out_name:         "lev"	
+  must_have_bounds: "no"	
+  stored_direction: "decreasing"	
+  valid_min:        0.0	
+  valid_max:        1.0	
+  formula:          "p = ptop + sigma*(ps - ptop)"	
+  z_factors:        "ptop: ptop sigma: lev ps: ps"	
+  z_bounds_factors: "ptop: ptop sigma: lev_bnds ps: ps"	
+  generic_level_name: "alevhalf"
+#----------------------------------	
+#
+#
+#============
     }, standard_hybrid_sigma: {
 #============
 #
@@ -287,6 +383,37 @@ axis_entries:{  time1: {
   z_factors:        "p0: p0 a: a b: b ps: ps"	
   z_bounds_factors: "p0: p0 a: a_bnds b: b_bnds ps: ps"	
   generic_level_name: "alevel"
+#----------------------------------		
+#
+#
+#============
+    }, standard_hybrid_sigma_half: {
+#============
+#
+# This coordinate is dimensionless and varies from a small value at the model top to 1.0 at the surface.
+#  The values of a+ b, which appear in the formula below, should be stored as standard_hybrid_sigma.  
+#  Note that in the netCDF file the variable will be named "lev", not standard_hybrid_sigma.
+#
+#---------------------------------
+# Axis attributes:
+#----------------------------------	
+  standard_name:    "atmosphere_hybrid_sigma_pressure_coordinate"	
+  units:            "1"	
+  axis:             "Z"	
+  positive:         "down"	
+  long_name:        "hybrid sigma pressure coordinate"	
+#----------------------------------
+# Additional axis information:
+#----------------------------------	
+  out_name:         "lev"	
+  must_have_bounds: "no"	
+  stored_direction: "decreasing"	
+  valid_min:        0.0	
+  valid_max:        1.0	
+  formula:          "p = a*p0 + b*ps"	
+  z_factors:        "p0: p0 a: a b: b ps: ps"	
+  z_bounds_factors: "p0: p0 a: a_bnds b: b_bnds ps: ps"	
+  generic_level_name: "alevhalf"
 #----------------------------------		
 #
 #
@@ -324,6 +451,39 @@ axis_entries:{  time1: {
 #
 #
 #============
+    }, alternate_hybrid_sigma_half: {
+#============
+#
+# This coordinate is dimensionless and varies from a small value at the model top to 1.0 at the surface.
+#  The values of ap/p0 + b, which appear in the formula below, should be stored as alternate_hybrid_sigma.  
+#  Note that in the netCDF file the variable will be named "lev", not alternate_hybrid_sigma.
+#
+#------------
+#
+# Axis attributes:
+#----------------------------------	
+  standard_name:    "atmosphere_hybrid_sigma_pressure_coordinate"	
+  units:            "1"	
+  axis:             "Z"	
+  positive:         "down"	
+  long_name:        "hybrid sigma pressure coordinate"	
+#----------------------------------	
+#
+# Additional axis information:
+#----------------------------------	
+  out_name:         "lev"	
+  must_have_bounds: "no"	
+  stored_direction: "decreasing"	
+  valid_min:        0.0	
+  valid_max:        1.0	
+  formula:          "p = ap + b*ps"	
+  z_factors:        "ap: ap b: b ps: ps"	
+  z_bounds_factors: "ap: ap_bnds b: b_bnds ps: ps"	
+  generic_level_name: "alevhalf"
+#----------------------------------		
+#
+#
+#============
     }, hybrid_height: {
 #============
 #
@@ -352,6 +512,44 @@ axis_entries:{  time1: {
   z_factors:        "a: lev b: b orog: orog"	
   z_bounds_factors: "a: lev_bnds b: b_bnds orog: orog"	
   generic_level_name: "alevel"
+#----------------------------------		
+#
+# ***************************************************************
+#
+# Vertical coordinate formula terms:
+#
+# ***************************************************************
+#
+#
+#============
+}, hybrid_height_half: {
+#============
+#
+# This coordinate has dimension of meters (m) and increases upward.
+#  The values of a which appear in the formula below, should be stored as hybrid_height.  
+#  Note that in the netCDF file the variable will be named "lev", not hybrid_height.
+#
+#------------
+#
+# Axis attributes:
+#----------------------------------	
+  standard_name:    "atmosphere_hybrid_height_coordinate"	
+  units:            "m"	
+  axis:             "Z"	
+  positive:         "up"	
+  long_name:        "hybrid height coordinate"	
+#----------------------------------	
+#
+# Additional axis information:
+#----------------------------------	
+  out_name:         "lev"	
+  must_have_bounds: "no"	
+  stored_direction: "increasing"	
+  valid_min:        0.0	
+  formula:          "z = a + b*orog"	
+  z_factors:        "a: lev b: b orog: orog"	
+  z_bounds_factors: "a: lev_bnds b: b_bnds orog: orog"	
+  generic_level_name: "alevhalf"
 #----------------------------------		
 #
 # ***************************************************************
