@@ -8,14 +8,14 @@ for realm in $(${SQLITE3} "${CMIP6DB}" \
     filename="CMIP6_${realm}.json"
     echo $filename
     cp /tmp/$filename .
-    cp $filename ${ROOT_PATH}/cmor3/cmor/Tables/
+    cp $filename ${ROOT_PATH}/cmor/Tables/
     cp $filename ${ROOT_PATH}/cmip6-cmor-tables/Tables
 done
 for filename in CMIP6_coordinate.json CMIP6_formula_terms.json; do 
     cmd="cp /tmp/$filename ."
     echo $cmd
     $cmd
-    cmd="cp /tmp/$filename ${ROOT_PATH}/cmor3/cmor/TestTables/"
+    cmd="cp /tmp/$filename ${ROOT_PATH}/cmor/TestTables/"
     echo $cmd
     $cmd
     cmd="cp /tmp/$filename ${ROOT_PATH}/cmip6-cmor-tables/Tables"
