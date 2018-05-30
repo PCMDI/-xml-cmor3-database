@@ -1012,6 +1012,7 @@ for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR
         c.execute(cmd)
         results = c.fetchall()
         if not results:
+            print "\tOk adding {} from this table".format(name)
             cmd = """insert into formulaVar values (""" + \
                   "'" + str(name)              + "'" + """, """ \
                   "'" + str(long_name)         + "'" + """, """ \
@@ -1130,7 +1131,10 @@ for file in files:
     z_factors  = {key for var in variables for key in cmor2.axis_entries.__dict__[var].z_factors.split(" ") if key.find(':') == -1
                   if key in cmor2.variable_entry.__dict__.keys()}
 
+    half = { key for key in cmor2.variable_entry.keys() if key.find("_half")>-1 }
+    print "HALF:",half
     z_factors.update(z_bnds)
+    z_factors.update(half)
 
     formulaVar = list(z_factors)
     print "Create formula variables"
@@ -1151,6 +1155,7 @@ for file in files:
         c.execute(cmd)
         results = c.fetchall()
         if not results:
+            print "\tOk adding {}/{} from this table {}".format(name, out_name, file)
             cmd = """insert into formulaVar values (""" + \
                   "'" + str(name)              + "'" + """, """ \
                   "'" + str(long_name)         + "'" + """, """ \

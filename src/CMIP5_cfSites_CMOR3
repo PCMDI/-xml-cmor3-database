@@ -625,6 +625,24 @@ axis_entries:{  time1: {
 #
 #
 #============
+    }, a_half: {
+#============
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: a(k)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevhalf" ]	
+  type:               "double"	
+  out_name:          "a"	
+
+#----------------------------------	
+#
+#
     }, b: {
 #============
 #------------
@@ -638,6 +656,94 @@ axis_entries:{  time1: {
 #----------------------------------	
   dimensions:         [ "alevel" ]	
   type:               "double"	
+#----------------------------------	
+#
+#
+#============
+    }, b_half: {
+#============
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: b(k)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevhalf" ]	
+  type:               "double"	
+  out_name:           "b"
+#----------------------------------	
+#
+#
+#============
+    }, b1: {
+#============
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: b1(k)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevel" ]	
+  type:               "double"	
+#----------------------------------	
+#
+#
+#============
+    }, b1_half: {
+#============
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: b1(k)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevhalf" ]	
+  type:               "double"	
+  out_name:           "b1"
+#----------------------------------	
+#
+#
+#============
+    }, b2: {
+#============
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: b2(k)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevel" ]	
+  type:               "double"	
+#----------------------------------	
+#
+#
+#============
+    }, b2_half: {
+#============
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: b2(k)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevhalf" ]	
+  type:               "double"	
+  out_name:           "b2"
 #----------------------------------	
 #
 #
@@ -660,6 +766,25 @@ axis_entries:{  time1: {
 #
 #
 #============
+    }, a_half_bnds: {
+#============
+#
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: a(k+1/2)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevhalf" ]	
+  type:               "double"	
+  out_name:           "a_bnds"
+#----------------------------------	
+#
+#
+#============
     }, b_bnds: {
 #============
 #
@@ -674,6 +799,25 @@ axis_entries:{  time1: {
 #----------------------------------	
   dimensions:         [ "alevel" ]	
   type:               "double"	
+#----------------------------------
+#
+#
+#============
+    }, b_half_bnds: {
+#============
+#
+#------------
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: b(k+1/2)"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevhalf" ]	
+  type:               "double"	
+  out_name:           "b_bnds"
 #----------------------------------
 #
 #
@@ -708,6 +852,42 @@ axis_entries:{  time1: {
 #----------------------------------	
   dimensions:         [ "alevel" ]	
   type:               "double"	
+#----------------------------------	
+#
+#
+#============
+    }, ap_half: {
+#============
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: ap(k)"	
+  units:           "Pa"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevhalf" ]	
+  type:               "double"
+  out_name:           "ap"
+#----------------------------------	
+#
+#
+#============
+    }, ap_half_bnds: {
+#============
+#
+# Variable attributes:
+#----------------------------------	
+  long_name:   "vertical coordinate formula term: ap(k+1/2)"	
+  units:           "Pa"	
+#----------------------------------	
+#
+# Additional variable information:
+#----------------------------------	
+  dimensions:         [ "alevel" ]	
+  type:               "double"	
+  out_name:           "ap_bnds"
 #----------------------------------	
 #
 #
