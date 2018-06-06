@@ -483,6 +483,10 @@ for child in axes.getchildren():
     c.execute(cmd)
     results = c.fetchall()
     if not results:
+        if name == "grid_latitude":
+            origin = "grid"
+        else:
+            origin = "XML"
         cmd = """insert into axisEntry values (""" + \
               "'" + str(name)              + "'" + """, """ \
               "'" + str(caxis)             + "'" + """, """ \
@@ -506,7 +510,7 @@ for child in axes.getchildren():
               "'" + str(z_factors)         + "'" + """, """ \
               "'" + str(bounds_values)     + "'" + """, """ \
               "'" + str(generic_level_name)     + "'" + """, """ \
-              "'" + "XML"                  + "'" + """) """
+              "'" + origin                  + "'" + """) """
         c.execute(cmd)
 axes=""
 c.execute("commit")
@@ -1251,6 +1255,7 @@ cmor2 = cfg.Config()
 cmor2.read_file("./CMIP5_grids_CMOR3")
 print "Create axes for grids"
 for axis in cmor2.axis_entry.keys():
+    print("FROM CMIP5_grids_CMOR3",axis)
     name               = axis
     caxis              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('axis')             \
                            if ('axis'             in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
@@ -1298,6 +1303,7 @@ for axis in cmor2.axis_entry.keys():
     results = c.fetchall()
 
     if not results:
+        print("\tADDING TO DB")
         cmd = """insert into axisEntry values (""" + \
               "'" + str(name)              + "'" + """, """ \
               "'" + str(caxis)             + "'" + """, """ \
@@ -1323,6 +1329,8 @@ for axis in cmor2.axis_entry.keys():
               "'" + str(generic_level_name)         + "'" + """, """ \
               "'grid') """
         c.execute(cmd)
+    else:
+        print("\tRESULTS:",results)
 
 gridVar = [key for key in cmor2.variable_entry.keys()]
 
