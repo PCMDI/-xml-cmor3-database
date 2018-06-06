@@ -483,10 +483,6 @@ for child in axes.getchildren():
     c.execute(cmd)
     results = c.fetchall()
     if not results:
-        if name == "grid_latitude":
-            origin = "grid"
-        else:
-            origin = "XML"
         cmd = """insert into axisEntry values (""" + \
               "'" + str(name)              + "'" + """, """ \
               "'" + str(caxis)             + "'" + """, """ \
@@ -510,7 +506,7 @@ for child in axes.getchildren():
               "'" + str(z_factors)         + "'" + """, """ \
               "'" + str(bounds_values)     + "'" + """, """ \
               "'" + str(generic_level_name)     + "'" + """, """ \
-              "'" + origin                  + "'" + """) """
+              "'" + "XML"                  + "'" + """) """
         c.execute(cmd)
 axes=""
 c.execute("commit")

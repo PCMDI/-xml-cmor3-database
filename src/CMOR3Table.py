@@ -446,7 +446,7 @@ class CMOR3Table:
                        ae.valid_min,
                        ae.valid_max
                 from axisEntry ae
-                where origin = 'grid';"""
+                where origin = 'grid' or name = 'grid_latitude';"""
 
         self.c.execute(cmd)
         axes = self.c.fetchall()
