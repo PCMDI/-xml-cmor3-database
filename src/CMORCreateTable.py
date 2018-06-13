@@ -32,6 +32,9 @@ def replaceString(var_entry, var, field):
     if( (var == '') and  (field != 'comment') ):
         var_entry = re.sub(r"" + field + ":.*\n", "", var_entry)
     var_entry = var_entry.replace("<" + field + ">", var)
+    changes = {"ocnBgChem":"ocnbgchem"}
+    for change, new in changes.iteritems():
+        var_entry = var_entry.replace(change, new)
     return var_entry
 
 
