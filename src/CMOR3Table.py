@@ -446,7 +446,7 @@ class CMOR3Table:
                        ae.valid_min,
                        ae.valid_max
                 from axisEntry ae
-                where origin = 'grid';"""
+                where origin = 'grid' or name = 'grid_latitude';"""
 
         self.c.execute(cmd)
         axes = self.c.fetchall()
@@ -589,7 +589,8 @@ class CMOR3Table:
                         value,
                         z_bounds_factors,
                         z_factors,
-                        bounds_values
+                        bounds_values,
+                        generic_level_name
                  from axisEntry
                  where origin != 'grid'
               UNION
@@ -613,7 +614,8 @@ class CMOR3Table:
                         value,
                         "",
                         "",
-                        boundsValues
+                        boundsValues,
+                        generic_level_name
                  from grid   
                  where type != 'character' and 
                        isIndex != 'ok' and 

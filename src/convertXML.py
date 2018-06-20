@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 
 # sqlite> select DISTINCT vg.label from requestVar vg, requestVarGroup rvg, requestItem ri, requestLink rl where  ri.mip="GeoMIP" and ri.rlid==rl.uid and rl.refid=rvg.uid and vg.vid=rvg.uid;
 import sqlite3
@@ -216,6 +216,7 @@ c.execute(""" create table axisEntry (
     z_bounds_factors text,
     z_factors text,
     bounds_values text,
+    generic_level_name text,
     origin text)""")
 
 c.execute(""" create table expIDs (
@@ -286,7 +287,8 @@ c.execute(""" create table grid (
     type text,
     uid text,
     units text,
-    value text
+    value text,
+    generic_level_name text
 )""")
 
 
@@ -472,6 +474,7 @@ for child in axes.getchildren():
     z_bounds_factors   = ""
     z_factors          = ""
     climatology        = ""
+    generic_level_name = ""
     if (name == 'time2') or (name == 'time3'):
         climatology        = "yes"
     formula            = ""
@@ -502,6 +505,7 @@ for child in axes.getchildren():
               "'" + str(z_bounds_factors)  + "'" + """, """ \
               "'" + str(z_factors)         + "'" + """, """ \
               "'" + str(bounds_values)     + "'" + """, """ \
+              "'" + str(generic_level_name)     + "'" + """, """ \
               "'" + "XML"                  + "'" + """) """
         c.execute(cmd)
 axes=""
@@ -549,6 +553,8 @@ for child in grid.getchildren():
         uid                   = child.get('uid') or ""
         units                 = child.get('units') or ""
         value                 = child.get('value') or ""
+        generic_level_name    = child.get('generic_level_name') or ""
+
         cmd = """ insert into grid values (""" + \
              "'" + altLabel        + "'" + """, """ + \
              "'" + axis            + "'" + """, """ + \
@@ -570,7 +576,8 @@ for child in grid.getchildren():
              "'" + itype           + "'" + """, """ + \
              "'" + uid.replace('\'','')             + "'" + """, """ + \
              "'" + units           + "'" + """, """ + \
-             "'" + value + "'" + """) """
+             "'" + value + "'" + """, """ + \
+             "'" + generic_level_name + "'" + """) """
         c.execute(cmd)
 grid = ""
 
@@ -1005,6 +1012,7 @@ for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR
         c.execute(cmd)
         results = c.fetchall()
         if not results:
+            print "\tOk adding {} from this table".format(name)
             cmd = """insert into formulaVar values (""" + \
                   "'" + str(name)              + "'" + """, """ \
                   "'" + str(long_name)         + "'" + """, """ \
@@ -1123,7 +1131,10 @@ for file in files:
     z_factors  = {key for var in variables for key in cmor2.axis_entries.__dict__[var].z_factors.split(" ") if key.find(':') == -1
                   if key in cmor2.variable_entry.__dict__.keys()}
 
+    half = { key for key in cmor2.variable_entry.keys() if key.find("_half")>-1 }
+    print "HALF:",half
     z_factors.update(z_bnds)
+    z_factors.update(half)
 
     formulaVar = list(z_factors)
     print "Create formula variables"
@@ -1144,6 +1155,7 @@ for file in files:
         c.execute(cmd)
         results = c.fetchall()
         if not results:
+            print "\tOk adding {}/{} from this table {}".format(name, out_name, file)
             cmd = """insert into formulaVar values (""" + \
                   "'" + str(name)              + "'" + """, """ \
                   "'" + str(long_name)         + "'" + """, """ \
@@ -1201,6 +1213,8 @@ for file in files:
                                if ('z_factors' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
         bounds_values      = cmor2.axis_entries.__getattribute__(axis).__getattribute__('bounds_values')    \
                                if ('bounds_values' in cmor2.axis_entries.__getattribute__(axis).keys())        else ""
+        generic_level_name = cmor2.axis_entries.__getattribute__(axis).__getattribute__('generic_level_name')    \
+                               if ('generic_level_name' in cmor2.axis_entries.__getattribute__(axis).keys())        else "" 
 
         cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
         c.execute(cmd)
@@ -1229,6 +1243,7 @@ for file in files:
                   "'" + str(z_bounds_factors)  + "'" + """, """ \
                   "'" + str(z_factors)         + "'" + """, """ \
                   "'" + str(bounds_values)         + "'" + """, """ \
+                  "'" + str(generic_level_name)         + "'" + """, """ \
                   "'" + str(tkFile)            + "'" + """) """
             c.execute(cmd)
 
@@ -1236,6 +1251,7 @@ cmor2 = cfg.Config()
 cmor2.read_file("./CMIP5_grids_CMOR3")
 print "Create axes for grids"
 for axis in cmor2.axis_entry.keys():
+    print("FROM CMIP5_grids_CMOR3",axis)
     name               = axis
     caxis              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('axis')             \
                            if ('axis'             in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
@@ -1277,13 +1293,13 @@ for axis in cmor2.axis_entry.keys():
                            if ('z_factors' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
     bounds_values      = cmor2.axis_entry.__getattribute__(axis).__getattribute__('bounds_values')    \
                            if ('bounds_values' in cmor2.axis_entry.__getattribute__(axis).keys())        else ""
-
-    print name
+    generic_level_name = ""
     cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
     c.execute(cmd)
     results = c.fetchall()
 
     if not results:
+        print("\tADDING TO DB")
         cmd = """insert into axisEntry values (""" + \
               "'" + str(name)              + "'" + """, """ \
               "'" + str(caxis)             + "'" + """, """ \
@@ -1306,8 +1322,11 @@ for axis in cmor2.axis_entry.keys():
               "'" + str(z_bounds_factors)  + "'" + """, """ \
               "'" + str(z_factors)         + "'" + """, """ \
               "'" + str(bounds_values)         + "'" + """, """ \
+              "'" + str(generic_level_name)         + "'" + """, """ \
               "'grid') """
         c.execute(cmd)
+    else:
+        print("\tRESULTS:",results)
 
 gridVar = [key for key in cmor2.variable_entry.keys()]
 

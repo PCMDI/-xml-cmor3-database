@@ -1,0 +1,36 @@
+test: "test"
+axis_entries: {
+    coucou: {
+      standard_name:    "ocean_sigma_z"
+      axis:             "Z"
+      long_name:        "ocean sigma over z coordinate"
+      out_name:         "lev"
+      must_have_bounds: "yes"
+      formula:          "for k <= nsigma: z(n,k,j,i) = eta(n,j,i) + sigma(k)*(min(depth_c,depth(j,i))+eta(n,j,i)) ; for k > nsigma: z(n,k,j,i) = zlev(k)"
+      z_factors:        "ps1: ps1 ps2: ps2 eta2: eta2"
+      z_bounds_factors: ""
+        }
+}
+variable_entry: {
+    ps1: {
+      units:             "Pa"
+      long_name:         "vertical coordinate formula term: ps"
+      dimensions:        [ "longitude","latitude","time1" ]
+      type:              "real"
+      out_name:          "ps"
+    },
+    ps2: {
+      units:             "Pa"
+      long_name:         "vertical coordinate formula term: ps"
+      dimensions:        [ "longitude","latitude","time2" ]
+      type:              "real"
+      out_name:          "ps"
+    },
+    eta2: {
+      units:             "m"
+      long_name:         "Sea Surface Height formula term: thetao"
+      dimensions:        [ "longitude","latitude","time2" ]
+      type:              "real"
+      out_name:          "eta"
+    }
+}

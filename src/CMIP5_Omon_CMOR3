@@ -294,6 +294,7 @@ axis_entries:{  longitude: {
   stored_direction: "increasing"	
   valid_min:        0.	
   valid_max:        12000.	
+  generic_level_name: "olevel"
 #----------------------------------	
 #
 #============
@@ -317,6 +318,7 @@ axis_entries:{  longitude: {
   formula:          "for k <= k_c:\n z(k,j,i)= sigma(k)*f(j,i) \n for k > k_c:\n z(k,j,i)= f(j,i) + (sigma(k)-1)*(depth(j,i)-f(j,i)) \n f(j,i)= 0.5*(z1+ z2) + 0.5*(z1-z2)* tanh(2*a/(z1-z2)*(depth(j,i)-href))"	
   z_factors:        "sigma: sigma depth: depth z1: z1 z2: z2 a: a_coeff href: href k_c: k_c"	
   z_bounds_factors: "sigma: sigma_bnds depth: depth z1: z1 z2: z2 a: a href: href k_c: k_c"	
+  generic_level_name: "olevel"
 #----------------------------------	
 #
 #============
@@ -338,7 +340,8 @@ axis_entries:{  longitude: {
   must_have_bounds: "yes"	
   formula:          "for k <= nsigma: z(n,k,j,i) = eta(n,j,i) + sigma(k)*(min(depth_c,depth(j,i))+eta(n,j,i)) ; for k > nsigma: z(n,k,j,i) = zlev(k)"	
   z_factors:        "sigma: sigma eta: eta depth: depth depth_c: depth_c nsigma: nsigma zlev: zlev"	
-  z_bounds_factors: "sigma: sigma_bnds eta: eta depth: depth depth_c: depth_c nsigma: nsigma zlev: zlev_bnds"	
+  z_bounds_factors: "sigma: sigma_bnds eta: eta depth: depth depth_c: depth_c nsigma: nsigma zlev: zlev_bnds"
+  generic_level_name: "olevel"
 #----------------------------------	
 #
 #============
@@ -369,6 +372,7 @@ axis_entries:{  longitude: {
   formula:          "z(n,k,j,i) = eta(n,j,i)*(1+s(k)) + depth_c*s(k) + (depth(j,i)-depth_c)*C(k) \n where \n C(k)=(1-b)*sinh(a*s(k))/sinh(a) +\n           b*(tanh(a*(s(k)+0.5))/(2*tanh(0.5*a)) - 0.5)"	
   z_factors:        "s: lev eta: eta depth: depth a: a_coeff b: b_coeff depth_c: depth_c"	
   z_bounds_factors: "s: lev_bnds eta: eta depth: depth a: a b: b depth_c: depth_c"	
+  generic_level_name: "olevel"
 #----------------------------------	
 #
 #============
@@ -399,6 +403,7 @@ axis_entries:{  longitude: {
   formula:          "z(n,k,j,i) = eta(n,j,i) + sigma(k)*(depth(j,i)+eta(n,j,i))"	
   z_factors:        "sigma: lev eta: eta depth: depth"	
   z_bounds_factors: "sigma: lev_bnds eta: eta depth: depth"	
+  generic_level_name: "olevel"
 #----------------------------------	
 #
 #
