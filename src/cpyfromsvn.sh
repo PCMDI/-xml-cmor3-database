@@ -1,5 +1,7 @@
 #!/bin/bash
-export CMIP6dreq_path="/svn/CMIP6dreq/trunk"
+echo "ARGS: $1"
+export CMIP6dreq_path=${1:-"/svn/CMIP6dreq/trunk"}
+echo "Copying from: ${CMIP6dreq_path}"
 pushd ${CMIP6dreq_path}
 svn update
 popd
