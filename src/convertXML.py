@@ -546,6 +546,7 @@ for child in grid.getchildren():
                 except:
                     requested  = ""
         standardName          = child.get('standardName') or ""
+        print("CRREATE GRID STD NAME:",standardName)
         tables                = child.get('tables') or ""
         title                 = child.get('title') or ""
         tolRequested          = child.get('tolRequested') or ""

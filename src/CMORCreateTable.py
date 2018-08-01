@@ -220,8 +220,14 @@ def createGrids(bJSON=True):
     varSQL = [vars[i] for i in range(len(vars))]
 
     axis_entry = "\"axis_entry\": {"
+    # variable entries need standard name for 
+    std_names_dict = {"long_name": {"latitude":u"latitude", "longitude":u"longitude"}, 
+    "standard_name": {"latitude":u"latitude", "longitude":u"longitude"}}
     for entry in GridAxes:
         axis = list(entry)
+        if axis[0] in [u"latitude", u"longitude"]:
+            std_names_dict[axis[0]] = axis[4]
+
         axis_entry += CMOR3Template.GridAxisTemplateJSON
 
         axis_entry = replaceString(axis_entry, axis[0], "grid_axis_entry")
@@ -238,9 +244,17 @@ def createGrids(bJSON=True):
     for varGrid in varSQL:
         variable_entry += CMOR3Template.GridVarTemplateJSON
         variable_entry = replaceString(variable_entry, varGrid[0], "grid_variable_entry")
-        variable_entry = replaceString(variable_entry, varGrid[1], "standard_name")
+        if varGrid[1] == "":
+            std_name = std_names_dict["standard_name"].get(varGrid[0], "")
+        else:
+            std_name = varGrid[1]
+        variable_entry = replaceString(variable_entry, std_name, "standard_name")
         variable_entry = replaceString(variable_entry, varGrid[2], "units")
-        variable_entry = replaceString(variable_entry, varGrid[3], "long_name")
+        if varGrid[3] == "":
+            lng_name = std_names_dict["long_name"].get(varGrid[0], "")
+        else:
+            lng_name = varGrid[3]
+        variable_entry = replaceString(variable_entry, lng_name, "long_name")
         variable_entry = replaceString(variable_entry, varGrid[5], "out_name")
         variable_entry = replaceString(variable_entry, varGrid[6], "valid_min")
         variable_entry = replaceString(variable_entry, varGrid[7], "valid_max")
