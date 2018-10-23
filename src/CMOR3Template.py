@@ -141,8 +141,8 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
             "AERday": { "approxInterval" : "1.0", 
                         "genericLevels"  : ""
                       },
-            "AERhr": { "approxInterval" : "1.0", 
-                        "genericLevels"  : "0.017361"
+            "AERhr": { "approxInterval" : "0.041667", 
+                        "genericLevels"  : "alevel alevhalf"
                       },
               "Lmon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
@@ -186,7 +186,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
        "E1hrClimMon":  { "approxInterval" : "0.017361",
                         "genericLevels"  : ""
                       },
-             "E1hr":  { "approxInterval" : "0.017361",
+             "E1hr":  { "approxInterval" : "0.041667",
                         "genericLevels"  : ""
                       },
              "E3hr":  { "approxInterval" : "0.125000",
