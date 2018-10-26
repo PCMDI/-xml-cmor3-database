@@ -159,9 +159,6 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
               "SImon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
                       },
-              "aero": { "approxInterval" : "30.00000",
-                        "genericLevels"  : "alevel alev1"
-                      },
               "Oclim": { "approxInterval" : "30.00000",
                         "genericLevels"  : "olevel"
                       },
@@ -213,14 +210,6 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
             "Esubhr": { "approxInterval" : "0.017361",
                         "genericLevels"  : "alevel alevhalf"
                       },
-             "subhr": { "approxInterval" : "0.017361",
-                        "genericLevels"  : "alevel alevhalf"
-                      },
-              "cfsites": { "approxInterval" : "0.017361",
-                           "genericLevels"  : "alevel alevhalf",
-                           "approxIntervalWarning":  "0.25",
-                           "approxIntervalError":  "0.75",
-                      },
              "IyrGre": { "approxInterval" : "365.00",
                             "genericLevels"  : ""
                       },
@@ -245,61 +234,10 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
               "6hrPlevPt": { "approxInterval" : "0.250000",
                             "genericLevels"  : ""
                        },
-              "aerannual": { "approxInterval" : "365.00000",
-                            "genericLevels"  : ""
-                       },
-              "aerdaily":  { "approxInterval" : "1.00000",
-                            "genericLevels"  : ""
-                       },
-              "aerfixed":  { "approxInterval" : "0.00000",
-                                "genericLevels"  : ""
-                       },
-              "aerhourly": { "approxInterval" : "0.017361",
-                                "genericLevels"  : ""
-                       },
-              "aermonthly":  { "approxInterval" : "30.00000",
-                                    "genericLevels"  : ""
-                       },
-              "AmonAdj":     { "approxInterval" : "30.00000",
-                                    "genericLevels"  : ""
-                        },
-              "CCMI1_hourly": { "approxInterval" : "0.017361",
-                                "genericLevels"  : ""
-                        },
-              "CCMI1_monthly": { "approxInterval" : "30.00000",
-                                "genericLevels"  : ""
-                        },
-               "aerfixed":  { "approxInterval" : "0.00000",
-                                    "genericLevels"  : ""
-                        },
-              "CORDEX_day": { "approxInterval" : "1.00000",
-                            "genericLevels"  : ""
-                        },
-              "aerdaily":  { "approxInterval" : "1.00000",
-                                    "genericLevels"  : ""
-                        },
-              "em1hr":     { "approxInterval" : "0.017361",
-                                    "genericLevels"  : ""
-                        },
-              "em1hrclimmon": { "approxInterval" : "0.017361",
-                                    "genericLevels"  : ""
-                        },
-              "em3hr": { "approxInterval" : "0.125000",
-                                    "genericLevels"  : ""
-                        },
              "EdayZ": { "approxInterval" : "1.00000",
                                     "genericLevels"  : ""
                        },
               "Eday": { "approxInterval" : "1.00000",
-                                    "genericLevels"  : ""
-                       },
-              "emDaypt":  { "approxInterval" : "1.00000",
-                                    "genericLevels"  : ""
-                       },
-              "emDayZ":  { "approxInterval" : "1.00000",
-                                    "genericLevels"  : ""
-                       },
-              "emFx": { "approxInterval" : "0.00000",
                                     "genericLevels"  : ""
                        },
            "EmonZ": { "approxInterval" : "30.00000",
@@ -308,20 +246,11 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
             "Emon": { "approxInterval" : "30.00000",
                                     "genericLevels"  : "alevel olevel"
                        },
-            "emMonclim":{ "approxInterval" : "30.00000",
-                                    "genericLevels"  : ""
-                       },
-            "emMonpt": { "approxInterval" : "30.00000",
-                                    "genericLevels"  : ""
-                       },
             "Ofx": { "approxInterval" : "0.00000",
                                     "genericLevels"  : "olevel"
                        },
             "Odec": { "approxInterval" : "3650.00000",
                                     "genericLevels"  : "olevel"
-                       },
-            "emMonZ":  { "approxInterval" : "30.00000",
-                                    "genericLevels"  : ""
                        }
              }
 
