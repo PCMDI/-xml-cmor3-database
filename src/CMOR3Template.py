@@ -180,7 +180,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
             "E3hrPt":  { "approxInterval" : "0.125000",
                         "genericLevels"  : "alevel alevhalf",
                       },
-       "E1hrClimMon":  { "approxInterval" : "0.017361",
+       "E1hrClimMon":  { "approxInterval" : "0.041667",
                         "genericLevels"  : ""
                       },
              "E1hr":  { "approxInterval" : "0.041667",
@@ -205,10 +205,14 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
                       },
            "CFsubhr": { "approxInterval" : "0.017361",
-                        "genericLevels"  : "alevel alevhalf"
+                        "genericLevels"  : "alevel alevhalf",
+                        "approxIntervalWarning" : "0.5",
+                        "approxIntervalError" : "0.90"
                       },
             "Esubhr": { "approxInterval" : "0.017361",
-                        "genericLevels"  : "alevel alevhalf"
+                        "genericLevels"  : "alevel alevhalf",
+                        "approxIntervalWarning" : "0.5",
+                        "approxIntervalError" : "0.90"
                       },
              "IyrGre": { "approxInterval" : "365.00",
                             "genericLevels"  : ""
