@@ -9,7 +9,7 @@ p = argparse.ArgumentParser(
 
 p.add_argument("-s", "--svn", default="/svn/CMIP6dreq/trunk",
                help="path to Martin Jukes dreq repo")
-p.add_argument("-c", "--cmor", help="cmor version", default="3.3.3")
+p.add_argument("-c", "--cmor", help="cmor version", default="3.4.0")
 p.add_argument("-t", "--tables", help="path to tables")
 p.add_argument("-C", "--cv", help="path to CV repo")
 p.add_argument("-g", "--git", help="root path to git repos", default="/git")
