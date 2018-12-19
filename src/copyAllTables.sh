@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ROOT_PATH="/home/mauzey1/git"
+ROOT_PATH="/git"
 SQLITE3=${SQLITE3:-sqlite3}
 CMIP6DB=${CMIP6DB:-CMIP6.sql3}
 
