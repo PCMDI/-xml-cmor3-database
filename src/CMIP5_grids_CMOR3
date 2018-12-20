@@ -143,6 +143,7 @@ axis_entry:{  i_index: {
   units:            "m"	
   long_name:        "x coordinate of projection"	
   axis: "X"	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -160,6 +161,7 @@ axis_entry:{  i_index: {
   units:            "m"	
   long_name:        "y coordinate of projection"	
   axis: "Y"	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -178,6 +180,7 @@ axis_entry:{  i_index: {
   units:            "degrees"	
   long_name:        "x coordinate of projection"	
   axis: "X"	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -196,6 +199,7 @@ axis_entry:{  i_index: {
   units:            "degrees"	
   long_name:        "y coordinate of projection"	
   axis: "Y"	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -213,6 +217,7 @@ axis_entry:{  i_index: {
   units:            "degrees"	
   long_name:        "latitude in rotated pole grid"	
   axis: "Y"	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -231,6 +236,7 @@ axis_entry:{  i_index: {
   units:            "degrees"	
   long_name:        "longitude in rotated pole grid"	
   axis: "X"	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
