@@ -1438,6 +1438,8 @@ for var in gridVar:
                     if ('valid_min' in cmor2.variable_entry.__dict__[var].keys())      else ""
     valid_max = cmor2.variable_entry.__dict__[var].valid_max                          \
                     if ('valid_max' in cmor2.variable_entry.__dict__[var].keys())      else ""
+    vtype = cmor2.variable_entry.__dict__[var].type                          \
+                    if ('type' in cmor2.variable_entry.__dict__[var].keys())      else ""
 
     cmd = """select label from CMORvar where label = '""" + str(name).strip() + "' and mipTable='grids';"
     c.execute(cmd)

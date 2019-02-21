@@ -108,7 +108,8 @@ GridVarTemplateJSON = """
                         "dimensions":        "<dimensions>",
                         "out_name":          "<out_name>",
                         "valid_min":         "<valid_min>",
-                        "valid_max":         "<valid_max>"
+                        "valid_max":         "<valid_max>",
+                        "type":              "<type>"
                          },
 """
 GridAxisTemplateJSON = """

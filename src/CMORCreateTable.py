@@ -258,6 +258,7 @@ def createGrids(bJSON=True):
         variable_entry = replaceString(variable_entry, varGrid[5], "out_name")
         variable_entry = replaceString(variable_entry, varGrid[6], "valid_min")
         variable_entry = replaceString(variable_entry, varGrid[7], "valid_max")
+        variable_entry = replaceString(variable_entry, varGrid[8], "type")
         variable_entry = variable_entry.replace("<dimensions>",
                                                 (varGrid[4].replace("|", " ")).strip(" "))
 
