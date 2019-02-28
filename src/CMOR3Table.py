@@ -467,7 +467,8 @@ class CMOR3Table:
                                ss.dimensions,
                                v.label,
                                v.valid_min,
-                               v.valid_max
+                               v.valid_max,
+                               v.type
                from CMORvar v,
                     structure st,
                     spatialShape ss,

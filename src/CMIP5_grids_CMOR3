@@ -257,6 +257,7 @@ axis_entry:{  i_index: {
   units:            "degrees_east"	
   long_name:        "longitude coordinate"	
   dimensions:      [ "longitude","latitude" ]	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -277,6 +278,7 @@ axis_entry:{  i_index: {
   units:            "degrees_north"	
   long_name:        "latitude coordinate"	
   dimensions:      [ "longitude","latitude" ]	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -293,6 +295,7 @@ axis_entry:{  i_index: {
 #----------------------------------    
   units:            "degrees_east"	
   dimensions:      [ "vertices","longitude","latitude" ]	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
@@ -311,6 +314,7 @@ axis_entry:{  i_index: {
 #----------------------------------    
   units:            "degrees_north"	
   dimensions:      [ "vertices","longitude","latitude" ]	
+  type:             "double"
 #----------------------------------    
 #
 # Additional axis information:
