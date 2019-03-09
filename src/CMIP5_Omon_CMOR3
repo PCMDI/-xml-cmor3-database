@@ -297,6 +297,30 @@ axis_entries:{  longitude: {
   generic_level_name: "olevel"
 #----------------------------------	
 #
+
+#============
+    }, depth_coord_half: {
+#============
+#----------------------------------
+# Axis attributes:
+#----------------------------------
+  standard_name:    "depth"	
+  units:            "m"	
+  axis:             "Z"
+  positive:         "down"
+  long_name:        "ocean depth coordinate"	
+#----------------------------------
+# Additional axis information:
+#----------------------------------
+  out_name:         "lev"	
+  must_have_bounds: "no"	
+  stored_direction: "increasing"	
+  valid_min:        0.0	
+  valid_max:        12000.0	
+  generic_level_name: "olevhalf"
+#----------------------------------
+#
+
 #============
     }, ocean_double_sigma: {
 #============
