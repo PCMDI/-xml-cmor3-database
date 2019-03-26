@@ -429,7 +429,7 @@ print "Create Martin's dreq.xml axes"
 c.execute("begin")
 for child in axes.getchildren():
     name               = child.get('label') or ""
-    if name in ['alevel', 'olevel', 'alevhalf' ]:
+    if name in ['alevel', 'olevel', 'alevhalf', 'olevhalf' ]:
         continue
 #    if name == 'sdepth1':
 #        pdb.set_trace()
