@@ -155,7 +155,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : "alevel alevhalf"
                       },
               "Omon": { "approxInterval" : "30.00000",
-                        "genericLevels"  : "olevel"
+                        "genericLevels"  : "olevel olevhalf"
                       },
               "SImon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
