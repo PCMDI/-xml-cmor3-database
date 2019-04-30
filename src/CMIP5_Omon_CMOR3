@@ -353,7 +353,7 @@ axis_entries:{  longitude: {
 #
 # Axis attributes:
 #----------------------------------	
-  standard_name:    "ocean_sigma_z"	
+  standard_name:    "ocean_sigma_z_coordinate"	
   axis:             "Z"	
   long_name:        "ocean sigma over z coordinate"	
 #----------------------------------	
