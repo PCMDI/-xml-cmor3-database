@@ -231,7 +231,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                             "genericLevels"  : "alevel olevel"
                       },
              "Efx": { "approxInterval" : "0.00000",
-                            "genericLevels"  : "alevel olevel"
+                            "genericLevels"  : "alevhalf"
                       },
               "fx": { "approxInterval" : "0.00000",
                             "genericLevels"  : "alevel"
