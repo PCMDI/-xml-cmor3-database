@@ -30,7 +30,7 @@ for file in files:
     z_factors.update(z_bnds)
 
     formulaVar = list(z_factors)
-    print "Create formula variables"
+    print("Create formula variables")
     for var in formulaVar:
         name = var
         long_name = cmor2.variable_entry.__dict__[var].long_name           \
@@ -49,7 +49,7 @@ for file in files:
                         if ('out_name' in
                             cmor2.variable_entry.__dict__[var].keys()) else name
 
-        print out_name
+        print(out_name)
         if name not in formulaVars.keys():
             formulaVars[name] = dict(name=name,
                                      long_name=long_name,
@@ -60,7 +60,7 @@ for file in files:
         else:
             print("{} already in formulaVar".format(name))
 
-    print "Create axes"
+    print("Create axes")
     for axis in cmor2.axis_entries.keys():
         #
         #    for item in cmor2.axis_entries.__getattribute__(axis).keys():
@@ -141,7 +141,7 @@ for file in files:
 
 cmor2 = cfg.Config()
 cmor2.read_file("./CMIP5_grids_CMOR3")
-print "Create axes for grids"
+print("Create axes for grids")
 for axis in cmor2.axis_entry.keys():
     print("FROM CMIP5_grids_CMOR3",axis)
     name               = axis
@@ -190,34 +190,34 @@ for axis in cmor2.axis_entry.keys():
     if name not in axisVars.keys():
         origin = 'grid'
         axisVars[name] = dict(name=name,       
-                                caxis=caxis,
-                                climatology=climatology,
-                                formula=formula.replace("\n","\\n"),
-                                long_name=long_name,
-                                must_have_bounds=must_have_bounds,
-                                out_name=out_name,
-                                positive=positive,
-                                requested=requested,
-                                requested_bounds=requested_bounds,
-                                standard_name=standard_name,
-                                stored_direction=stored_direction,
-                                tolerance=tolerance,
-                                ctype=ctype,
-                                units=units,
-                                valid_max=valid_max,
-                                valid_min=valid_min,
-                                value=value,
-                                z_bounds_factors=z_bounds_factors,
-                                z_factors=z_factors,
-                                bounds_values=bounds_values,
-                                generic_level_name=generic_level_name,
-                                origin=origin)
+                              caxis=caxis,
+                              climatology=climatology,
+                              formula=formula.replace("\n","\\n"),
+                              long_name=long_name,
+                              must_have_bounds=must_have_bounds,
+                              out_name=out_name,
+                              positive=positive,
+                              requested=requested,
+                              requested_bounds=requested_bounds,
+                              standard_name=standard_name,
+                              stored_direction=stored_direction,
+                              tolerance=tolerance,
+                              ctype=ctype,
+                              units=units,
+                              valid_max=valid_max,
+                              valid_min=valid_min,
+                              value=value,
+                              z_bounds_factors=z_bounds_factors,
+                              z_factors=z_factors,
+                              bounds_values=bounds_values,
+                              generic_level_name=generic_level_name,
+                              origin=origin)
         print("Added axis {}".format(name))
     else:
         print("{} already in axisEntry".format(name))
             
 with open('CMOR3_formula_terms.json','w') as f:
-    json.dump(formulaVars, f, indent=4)
+    json.dump(formulaVars, f, indent=4, sort_keys=True)
 
 with open('CMOR3_axes.json','w') as f:
-    json.dump(axisVars, f, indent=4)
+    json.dump(axisVars, f, indent=4, sort_keys=True)
