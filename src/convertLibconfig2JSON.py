@@ -53,7 +53,7 @@ for file in files:
         if name not in formulaVars.keys():
             formulaVars[name] = dict(name=name,
                                      long_name=long_name,
-                                     ctype=ctype,
+                                     type=ctype,
                                      dimension=dimension,
                                      out_name=out_name,
                                      units=units)
@@ -113,7 +113,7 @@ for file in files:
         if name not in axisVars.keys():
             origin = file.split("_")[1]
             axisVars[name] = dict(name=name,       
-                                  caxis=caxis,
+                                  axis=caxis,
                                   climatology=climatology,
                                   formula=formula.replace("\n","\\n"),
                                   long_name=long_name,
@@ -125,7 +125,7 @@ for file in files:
                                   standard_name=standard_name,
                                   stored_direction=stored_direction,
                                   tolerance=tolerance,
-                                  ctype=ctype,
+                                  type=ctype,
                                   units=units,
                                   valid_max=valid_max,
                                   valid_min=valid_min,
@@ -190,7 +190,7 @@ for axis in cmor2.axis_entry.keys():
     if name not in axisVars.keys():
         origin = 'grid'
         axisVars[name] = dict(name=name,       
-                              caxis=caxis,
+                              axis=caxis,
                               climatology=climatology,
                               formula=formula.replace("\n","\\n"),
                               long_name=long_name,
@@ -202,7 +202,7 @@ for axis in cmor2.axis_entry.keys():
                               standard_name=standard_name,
                               stored_direction=stored_direction,
                               tolerance=tolerance,
-                              ctype=ctype,
+                              type=ctype,
                               units=units,
                               valid_max=valid_max,
                               valid_min=valid_min,
