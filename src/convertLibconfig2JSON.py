@@ -5,8 +5,59 @@ import json
 formulaVars = {}
 axisVars = {}
 
-files = ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3", 
-         "./CMIP5_Omon_CMOR3", "./CMIP6_OImon_CMOR3", "./CMIP6_LImon_CMOR3",
+files = ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3"]
+for file in files:
+    cmor2 = cfg.Config()
+    cmor2.read_file(file)
+    # Add formula variables
+    #
+    formulaVar = [key for key in cmor2.variable_entry.keys()
+                   if cmor2.variable_entry.__dict__[key].long_name.find("formula") != -1]
+    variables = [key for key in cmor2.axis_entries.keys() if hasattr(cmor2.axis_entries.__dict__[key], 'z_factors')]
+
+    z_bnds     = {key for var in variables for key in
+                  cmor2.axis_entries.__dict__[var].z_bounds_factors.split(" ")
+                  if key.find(':') == -1
+                  if key in cmor2.variable_entry.__dict__.keys()}
+    z_factors  = {key for var in variables for key in
+                  cmor2.axis_entries.__dict__[var].z_factors.split(" ")
+                  if key.find(':') == -1
+                  if key in cmor2.variable_entry.__dict__.keys()}
+
+    z_factors.update(z_bnds)
+
+    formulaVar = list(z_factors)
+    print("Create formula variables")
+    for var in formulaVar:
+        name = var
+        long_name = cmor2.variable_entry.__dict__[var].long_name           \
+                        if ('long_name' in
+                            cmor2.variable_entry.__dict__[var].keys()) else ""
+        ctype     = cmor2.variable_entry.__dict__[var].type                 \
+                        if ('type' in
+                            cmor2.variable_entry.__dict__[var].keys()) else ""
+        dimension = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])\
+                        if ('dimensions' in
+                            cmor2.variable_entry.__dict__[var].keys()) else ""
+        units     = cmor2.variable_entry.__dict__[var].units                \
+                        if ('units' in
+                            cmor2.variable_entry.__dict__[var].keys()) else ""
+        out_name     = cmor2.variable_entry.__dict__[var].out_name          \
+                        if ('out_name' in
+                            cmor2.variable_entry.__dict__[var].keys()) else name
+
+        print(out_name)
+        if name not in formulaVars.keys():
+            formulaVars[name] = dict(name=name,
+                                     long_name=long_name,
+                                     type=ctype,
+                                     dimension=dimension,
+                                     out_name=out_name,
+                                     units=units)
+        else:
+            print("{} already in formulaVar".format(name))
+
+files = ["./CMIP5_Omon_CMOR3", "./CMIP6_OImon_CMOR3", "./CMIP6_LImon_CMOR3",
          "./CMIP6_Lmon_CMOR3", "./CMIP5_3hr_CMOR3",
          "./CMIP5_cfSites_CMOR3", "./CMIP5_cf3hr_CMOR3", "./CMIP5_cfMon_CMOR3"]
 for file in files:
