@@ -268,7 +268,7 @@ for axis in cmor2.axis_entry.keys():
         print("{} already in axisEntry".format(name))
             
 with open('CMOR3_formula_terms.json','w') as f:
-    json.dump(formulaVars, f, indent=4, sort_keys=True)
+    json.dump(dict(formula_entry=formulaVars), f, indent=4, sort_keys=True)
 
 with open('CMOR3_axes.json','w') as f:
-    json.dump(axisVars, f, indent=4, sort_keys=True)
+    json.dump(dict(axis_entry=axisVars), f, indent=4, sort_keys=True)
