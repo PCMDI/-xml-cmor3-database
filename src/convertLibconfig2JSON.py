@@ -2,8 +2,8 @@
 import pylibconfig2 as cfg
 import json
 
-formulaVars = {}
-axisVars = {}
+formulaEntries = {}
+axisEntries = {}
 
 files = ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3"]
 for file in files:
@@ -36,7 +36,7 @@ for file in files:
         ctype     = cmor2.variable_entry.__dict__[var].type                 \
                         if ('type' in
                             cmor2.variable_entry.__dict__[var].keys()) else ""
-        dimension = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])\
+        dimensions = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])\
                         if ('dimensions' in
                             cmor2.variable_entry.__dict__[var].keys()) else ""
         units     = cmor2.variable_entry.__dict__[var].units                \
@@ -47,13 +47,13 @@ for file in files:
                             cmor2.variable_entry.__dict__[var].keys()) else name
 
         print(out_name)
-        if name not in formulaVars.keys():
-            formulaVars[name] = dict(name=name,
-                                     long_name=long_name,
-                                     type=ctype,
-                                     dimension=dimension,
-                                     out_name=out_name,
-                                     units=units)
+        if name not in formulaEntries.keys():
+            formulaEntries[name] = dict(name=name,
+                                        long_name=long_name,
+                                        type=ctype,
+                                        dimensions=dimensions,
+                                        out_name=out_name,
+                                        units=units)
         else:
             print("{} already in formulaVar".format(name))
 
@@ -90,7 +90,7 @@ for file in files:
         ctype     = cmor2.variable_entry.__dict__[var].type                 \
                         if ('type' in
                             cmor2.variable_entry.__dict__[var].keys()) else ""
-        dimension = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])\
+        dimensions = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])\
                         if ('dimensions' in
                             cmor2.variable_entry.__dict__[var].keys()) else ""
         units     = cmor2.variable_entry.__dict__[var].units                \
@@ -101,13 +101,13 @@ for file in files:
                             cmor2.variable_entry.__dict__[var].keys()) else name
 
         print(out_name)
-        if name not in formulaVars.keys():
-            formulaVars[name] = dict(name=name,
-                                     long_name=long_name,
-                                     type=ctype,
-                                     dimension=dimension,
-                                     out_name=out_name,
-                                     units=units)
+        if name not in formulaEntries.keys():
+            formulaEntries[name] = dict(name=name,
+                                        long_name=long_name,
+                                        type=ctype,
+                                        dimensions=dimensions,
+                                        out_name=out_name,
+                                        units=units)
         else:
             print("{} already in formulaVar".format(name))
 
@@ -161,34 +161,43 @@ for file in files:
         generic_level_name = cmor2.axis_entries.__getattribute__(axis).__getattribute__('generic_level_name')    \
                                if ('generic_level_name' in cmor2.axis_entries.__getattribute__(axis).keys())        else "" 
 
-        if name not in axisVars.keys():
+        if name not in axisEntries.keys():
             origin = file.split("_")[1]
-            axisVars[name] = dict(name=name,       
-                                  axis=caxis,
-                                  climatology=climatology,
-                                  formula=formula.replace("\n","\\n"),
-                                  long_name=long_name,
-                                  must_have_bounds=must_have_bounds,
-                                  out_name=out_name,
-                                  positive=positive,
-                                  requested=requested,
-                                  requested_bounds=requested_bounds,
-                                  standard_name=standard_name,
-                                  stored_direction=stored_direction,
-                                  tolerance=tolerance,
-                                  type=ctype,
-                                  units=units,
-                                  valid_max=valid_max,
-                                  valid_min=valid_min,
-                                  value=value,
-                                  z_bounds_factors=z_bounds_factors,
-                                  z_factors=z_factors,
-                                  bounds_values=bounds_values,
-                                  generic_level_name=generic_level_name,
-                                  origin=origin)
+            axisEntries[name] = dict(name=name,       
+                                     axis=caxis,
+                                     climatology=climatology,
+                                     formula=formula.replace("\n","\\n"),
+                                     long_name=long_name,
+                                     must_have_bounds=must_have_bounds,
+                                     out_name=out_name,
+                                     positive=positive,
+                                     requested=requested,
+                                     requested_bounds=requested_bounds,
+                                     standard_name=standard_name,
+                                     stored_direction=stored_direction,
+                                     tolerance=str(tolerance),
+                                     type=ctype,
+                                     units=units,
+                                     valid_max=str(valid_max),
+                                     valid_min=str(valid_min),
+                                     value=str(value),
+                                     z_bounds_factors=z_bounds_factors,
+                                     z_factors=z_factors,
+                                     bounds_values=bounds_values,
+                                     generic_level_name=generic_level_name,
+                                     origin=origin)
             print("Added axis {}".format(name))
         else:
             print("{} already in axisEntry".format(name))
+            
+with open('CMOR3_formula_terms.json','w') as f:
+    json.dump(dict(formula_entry=formulaEntries), f, indent=4, sort_keys=True)
+
+with open('CMOR3_axes.json','w') as f:
+    json.dump(dict(axis_entry=axisEntries), f, indent=4, sort_keys=True)
+
+gridVarEntries = {}
+gridAxisEntries = {}
 
 cmor2 = cfg.Config()
 cmor2.read_file("./CMIP5_grids_CMOR3")
@@ -238,37 +247,60 @@ for axis in cmor2.axis_entry.keys():
                            if ('bounds_values' in cmor2.axis_entry.__getattribute__(axis).keys())        else ""
     generic_level_name = ""
 
-    if name not in axisVars.keys():
-        origin = 'grid'
-        axisVars[name] = dict(name=name,       
-                              axis=caxis,
-                              climatology=climatology,
-                              formula=formula.replace("\n","\\n"),
-                              long_name=long_name,
-                              must_have_bounds=must_have_bounds,
-                              out_name=out_name,
-                              positive=positive,
-                              requested=requested,
-                              requested_bounds=requested_bounds,
-                              standard_name=standard_name,
-                              stored_direction=stored_direction,
-                              tolerance=tolerance,
-                              type=ctype,
-                              units=units,
-                              valid_max=valid_max,
-                              valid_min=valid_min,
-                              value=value,
-                              z_bounds_factors=z_bounds_factors,
-                              z_factors=z_factors,
-                              bounds_values=bounds_values,
-                              generic_level_name=generic_level_name,
-                              origin=origin)
-        print("Added axis {}".format(name))
-    else:
-        print("{} already in axisEntry".format(name))
-            
-with open('CMOR3_formula_terms.json','w') as f:
-    json.dump(dict(formula_entry=formulaVars), f, indent=4, sort_keys=True)
+    gridAxisEntries[name] = dict(name=name,       
+                                 axis=caxis,
+                                 climatology=climatology,
+                                 formula=formula.replace("\n","\\n"),
+                                 long_name=long_name,
+                                 must_have_bounds=must_have_bounds,
+                                 out_name=out_name,
+                                 positive=positive,
+                                 requested=requested,
+                                 requested_bounds=requested_bounds,
+                                 standard_name=standard_name,
+                                 stored_direction=stored_direction,
+                                 tolerance=str(tolerance),
+                                 type=ctype,
+                                 units=units,
+                                 valid_max=str(valid_max),
+                                 valid_min=str(valid_min),
+                                 value=str(value),
+                                 z_bounds_factors=z_bounds_factors,
+                                 z_factors=z_factors,
+                                 bounds_values=bounds_values,
+                                 generic_level_name=generic_level_name,
+                                 origin=origin)
+    print("Added grid axis {}".format(name))
 
-with open('CMOR3_axes.json','w') as f:
-    json.dump(dict(axis_entry=axisVars), f, indent=4, sort_keys=True)
+print("Create variable entries for grids")
+for var in cmor2.variable_entry.keys():
+    print(cmor2.variable_entry.__dict__[var].keys())
+    long_name = cmor2.variable_entry.__dict__[var].long_name                     \
+                    if ('long_name' in cmor2.variable_entry.__dict__[var].keys()) else ""
+    standard_name = cmor2.variable_entry.__dict__[var].standard_name                          \
+                    if ('standard_name' in cmor2.variable_entry.__dict__[var].keys())      else ""
+    units     = cmor2.variable_entry.__dict__[var].units                         \
+                    if ('units' in cmor2.variable_entry.__dict__[var].keys())     else ""
+    dimensions = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])                         \
+                    if ('dimensions' in cmor2.variable_entry.__dict__[var].keys())     else ""
+    out_name  = cmor2.variable_entry.__dict__[var].out_name                          \
+                    if ('out_name' in cmor2.variable_entry.__dict__[var].keys())      else ""
+    valid_min = cmor2.variable_entry.__dict__[var].valid_min                          \
+                    if ('valid_min' in cmor2.variable_entry.__dict__[var].keys())      else ""
+    valid_max = cmor2.variable_entry.__dict__[var].valid_max                          \
+                    if ('valid_max' in cmor2.variable_entry.__dict__[var].keys())      else ""
+    vtype = cmor2.variable_entry.__dict__[var].type                          \
+                    if ('type' in cmor2.variable_entry.__dict__[var].keys())      else ""
+
+    gridVarEntries[var] = dict(long_name=long_name,
+                               standard_name=standard_name,
+                               units=units,
+                               dimensions=dimensions,
+                               out_name=out_name,
+                               valid_max=str(valid_max),
+                               valid_min=str(valid_min),
+                               type=vtype)
+    print("Added grid variable {}".format(var))
+
+with open('CMOR3_grid.json','w') as f:
+    json.dump(dict(axis_entry=gridAxisEntries,variable_entry=gridVarEntries), f, indent=4, sort_keys=True)
