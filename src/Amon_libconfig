@@ -25,7 +25,7 @@ approx_interval:  30.000000	# approximate spacing between successive time
 
 generic_levels:   "alevel alevhalf"	
 
-@include "../tables/expt_ids_libconfig"
-@include "../tables/axis_entries_libconfig"
-@include "../tables/variable_entries_libconfig"
+@include "./expt_ids_libconfig"
+@include "./axis_entries_libconfig"
+@include "./variable_entries_libconfig"
 
