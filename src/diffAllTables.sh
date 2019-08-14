@@ -13,9 +13,9 @@ for realm in $(${SQLITE3} "${CMIP6DB}" \
           'select distinct mipTable from CMORvar'); do                                                                                   
     filename="CMIP6_${realm}.json"                                                                                                             
     echo $filename
-    "${DIFF_VIEW}" --diff /tmp/$filename $filename
+    "${DIFF_VIEW}" --diff /tmp/$filename ../tables/$filename
 done
-"${DIFF_VIEW}" --diff /tmp/CMIP6_coordinate.json CMIP6_coordinate.json
-"${DIFF_VIEW}" --diff /tmp/CMIP6_formula_terms.json CMIP6_formula_terms.json
+"${DIFF_VIEW}" --diff /tmp/CMIP6_coordinate.json ../tables/CMIP6_coordinate.json
+"${DIFF_VIEW}" --diff /tmp/CMIP6_formula_terms.json ../tables/CMIP6_formula_terms.json
 
 exit 0
