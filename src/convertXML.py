@@ -968,7 +968,7 @@ for child in MIP.getchildren():
              "'" + url    + "'" + """) """
     c.execute(cmd)
 
-for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3" ]:
+for file in ["./Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3" ]:
     cmor2 = cfg.Config()
     cmor2.read_file(file)
     # Add formula variables
@@ -1102,7 +1102,7 @@ for file in ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR
 
 
 cmor2 = cfg.Config()
-cmor2.read_file("../tables/Amon_libconfig")
+cmor2.read_file("./Amon_libconfig")
 for expt in cmor2.expt_ids:
     eid                = expt.id or ""
     title              = expt.title or ""
