@@ -316,7 +316,7 @@ class CMOR3Table:
         cmd = """select DISTINCT  fv.name,
                                   fv.long_name,
                                   fv.type,
-                                  fv.dimension,
+                                  fv.dimensions,
                                   fv.out_name,
                                   fv.units
                  from formulaVar fv
