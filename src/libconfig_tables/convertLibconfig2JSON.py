@@ -5,7 +5,9 @@ import json
 formulaEntries = {}
 axisEntries = {}
 
-files = ["../tables/Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3"]
+files = ["Amon_libconfig", 
+         "CMIP5_Omon_CMOR3", 
+         "CMIP5_formula_CMOR3"]
 for file in files:
     cmor2 = cfg.Config()
     cmor2.read_file(file)
@@ -57,9 +59,14 @@ for file in files:
         else:
             print("{} already in formulaVar".format(name))
 
-files = ["./CMIP5_Omon_CMOR3", "./CMIP6_OImon_CMOR3", "./CMIP6_LImon_CMOR3",
-         "./CMIP6_Lmon_CMOR3", "./CMIP5_3hr_CMOR3",
-         "./CMIP5_cfSites_CMOR3", "./CMIP5_cf3hr_CMOR3", "./CMIP5_cfMon_CMOR3"]
+files = ["CMIP5_Omon_CMOR3", 
+         "CMIP6_OImon_CMOR3", 
+         "CMIP6_LImon_CMOR3",
+         "CMIP6_Lmon_CMOR3", 
+         "CMIP5_3hr_CMOR3",
+         "CMIP5_cfSites_CMOR3", 
+         "CMIP5_cf3hr_CMOR3", 
+         "CMIP5_cfMon_CMOR3"]
 for file in files:
     cmor2 = cfg.Config()
     cmor2.read_file(file)
