@@ -253,6 +253,7 @@ for axis in cmor2.axis_entry.keys():
     bounds_values      = cmor2.axis_entry.__getattribute__(axis).__getattribute__('bounds_values')    \
                            if ('bounds_values' in cmor2.axis_entry.__getattribute__(axis).keys())        else ""
     generic_level_name = ""
+    origin="grid"
 
     gridAxisEntries[name] = dict(name=name,       
                                  axis=caxis,
