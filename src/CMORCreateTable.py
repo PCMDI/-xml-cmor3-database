@@ -266,7 +266,7 @@ def createGrids(bJSON=True):
 
     variable_entry = variable_entry + "\"Dummy\":   \"\"\n }"
 
-    CMIP6Table = (json.loads("".join(Header + axis_entry + variable_entry + Footer)))
+    CMIP6Table = (json.loads("".join(Header + axis_entry + variable_entry + Footer), object_pairs_hook=OrderedDict))
 
     if("Dummy" in CMIP6Table['axis_entry']):
         del CMIP6Table['axis_entry']['Dummy']

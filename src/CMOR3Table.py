@@ -320,6 +320,7 @@ class CMOR3Table:
                                   fv.out_name,
                                   fv.units
                  from formulaVar fv
+                 order by fv.name
             """
         self.c.execute(cmd)
         formulaVars = self.c.fetchall()
@@ -446,7 +447,8 @@ class CMOR3Table:
                        ae.valid_min,
                        ae.valid_max
                 from axisEntry ae
-                where origin = 'grid' or name = 'grid_latitude';"""
+                where origin = 'grid' or name = 'grid_latitude'
+                order by ae.name;"""
 
         self.c.execute(cmd)
         axes = self.c.fetchall()
@@ -476,7 +478,8 @@ class CMOR3Table:
                where st.uid = v.stid
                      and ss.uid = st.spid
                      and v.vid=var.uid
-                     and v.mipTable like '%grids%'"""
+                     and v.mipTable like '%grids%'
+               order by v.label;"""
         self.c.execute(cmd)
         variables = self.c.fetchall()
 
