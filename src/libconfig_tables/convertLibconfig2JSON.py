@@ -72,20 +72,18 @@ for file in files:
     cmor2.read_file(file)
     # Add formula variables
     #
-    formulaVar = [key for key in cmor2.variable_entry.keys()
-                   if cmor2.variable_entry.__dict__[key].long_name.find("formula") != -1]
-    variables = [key for key in cmor2.axis_entries.keys() if hasattr(cmor2.axis_entries.__dict__[key], 'z_factors')]
+    variables = [key for key in cmor2.axis_entries.keys()
+                 if hasattr(cmor2.axis_entries.__dict__[key], 'z_factors')]
 
-    z_bnds     = {key for var in variables for key in
-                  cmor2.axis_entries.__dict__[var].z_bounds_factors.split(" ")
-                  if key.find(':') == -1
-                  if key in cmor2.variable_entry.__dict__.keys()}
-    z_factors  = {key for var in variables for key in
-                  cmor2.axis_entries.__dict__[var].z_factors.split(" ")
-                  if key.find(':') == -1
+    z_bnds     = {key for var in variables for key in cmor2.axis_entries.__dict__[var].z_bounds_factors.split(" ")
+                  if key.find(':') == -1  if key in cmor2.variable_entry.__dict__.keys()}
+    z_factors  = {key for var in variables for key in cmor2.axis_entries.__dict__[var].z_factors.split(" ") if key.find(':') == -1
                   if key in cmor2.variable_entry.__dict__.keys()}
 
+    half = { key for key in cmor2.variable_entry.keys() if key.find("_half")>-1 }
+    print "HALF:",half
     z_factors.update(z_bnds)
+    z_factors.update(half)
 
     formulaVar = list(z_factors)
     print("Create formula variables")
