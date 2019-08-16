@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import json
 from collections import OrderedDict
 import CMOR3Table
@@ -33,7 +35,7 @@ def replaceString(var_entry, var, field):
         var_entry = re.sub(r"" + field + ":.*\n", "", var_entry)
     var_entry = var_entry.replace("<" + field + ">", var)
     changes = {"ocnBgChem":"ocnBgchem"}
-    for change, new in changes.iteritems():
+    for change, new in changes.items():
         var_entry = var_entry.replace(change, new)
     return var_entry
 
@@ -271,7 +273,7 @@ def createGrids(bJSON=True):
     if("Dummy" in CMIP6Table['variable_entry']):
         del CMIP6Table['variable_entry']['Dummy']
 
-    print(json.dumps(CMIP6Table, indent=4))
+    print(json.dumps(CMIP6Table, indent=4, separators=(', ',': ')))
 
 
 # ==============================================================
@@ -383,14 +385,14 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "hr:jeAF", ["realm=", "JSON", "expt", "axes", "formulavar"])
         if(not opts):
-            print 'CMORCreateTable.py [ -r <realm> | -e | -A <axes> | -F <formulavar> ] -j'
+            print('CMORCreateTable.py [ -r <realm> | -e | -A <axes> | -F <formulavar> ] -j')
             sys.exit(2)
     except getopt.GetoptError:
-        print 'CMORCreateTable.py [ -r <realm> | -e | -A <axes> | -F <formulavar> ] -j'
+        print('CMORCreateTable.py [ -r <realm> | -e | -A <axes> | -F <formulavar> ] -j')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'CMORCreateTable.py [ -r <realm> | -e | -A <axes> | -F <formulavar> ] -j'
+            print('CMORCreateTable.py [ -r <realm> | -e | -A <axes> | -F <formulavar> ] -j')
             sys.exit()
         elif opt in ("-r", "--realm"):
             realm = arg
@@ -422,7 +424,7 @@ def main(argv):
             vars = cursor.getCMORVarFromMipTable(realm, 'MIP')
             varSQL = [vars[i] for i in range(len(vars))]
             if(not varSQL):
-                print "no Variable found for " + realm
+                print("no Variable found for " + realm)
                 return -1
             # -------------------------------------------------------------
             #  Create all other tables
@@ -437,7 +439,7 @@ def main(argv):
             CMIP6Table = (json.loads("".join(Header +  variable_entry + Footer), object_pairs_hook=OrderedDict))
             if("Dummy" in CMIP6Table['variable_entry']):
                 del CMIP6Table['variable_entry']['Dummy']
-            print(json.dumps(CMIP6Table, indent=4))
+            print(json.dumps(CMIP6Table, indent=4, separators=(', ',': ')))
         elif(axes):
             axis_entry        = createAxes(bJSON=bJSON)
             f=open("/tmp/test.json", "w")
@@ -446,21 +448,21 @@ def main(argv):
             CMIP6Table = (json.loads("".join("{" + axis_entry + "}"), object_pairs_hook=OrderedDict))
             if("Dummy" in CMIP6Table['axis_entry']):
                 del CMIP6Table['axis_entry']['Dummy']
-            print(json.dumps(CMIP6Table, indent=4))
+            print(json.dumps(CMIP6Table, indent=4, separators=(', ',': ')))
         elif(formulavar):
             formulavar_entry  = createFormulaVar(bJSON=bJSON)
             formulavar_entry = formulavar_entry + "\"Dummy\":   \"\"\n }"
             CMIP6Table = (json.loads("".join("{" + formulavar_entry + "}"), object_pairs_hook=OrderedDict))
             if("Dummy" in CMIP6Table['formula_entry']):
                 del CMIP6Table['formula_entry']['Dummy']
-            print(json.dumps(CMIP6Table, indent=4))
+            print(json.dumps(CMIP6Table, indent=4, separators=(', ',': ')))
 
     else:
-        print Header
-        print experiments
-        print axis_entry
-        print variable_entry
-        print Footer
+        print(Header)
+        print(experiments)
+        print(axis_entry)
+        print(variable_entry)
+        print(Footer)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
