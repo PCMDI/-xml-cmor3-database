@@ -1140,6 +1140,7 @@ for name, var in gridVars['variable_entry'].items():
     # grid
     #
     if not results:
+        gridVar['stid'] = stid 
         gridVar['vid'] = vid.replace('\'','') 
         columns = ", ".join(gridVar.keys())
         placeholders = ", ".join([":"+k for k in gridVar.keys()])
