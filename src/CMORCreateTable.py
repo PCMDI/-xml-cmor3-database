@@ -410,7 +410,7 @@ def main(argv):
             CMIP6Table = (json.loads("{" + "".join(experiments) + "}", object_pairs_hook=OrderedDict) )
             if("Dummy" in CMIP6Table['experiments']):
                 del CMIP6Table['experiments']['Dummy']
-            print(json.dumps(CMIP6Table, indent=4))
+            print(json.dumps(CMIP6Table, indent=4, separators=(', ',': ')))
         elif(realm):
             # -------------------------------------------------------------
             #  Create grids and exit
