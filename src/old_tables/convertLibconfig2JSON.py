@@ -81,7 +81,7 @@ for file in files:
                   if key in cmor2.variable_entry.__dict__.keys()}
 
     half = { key for key in cmor2.variable_entry.keys() if key.find("_half")>-1 }
-    print "HALF:",half
+    print("HALF:",half)
     z_factors.update(z_bnds)
     z_factors.update(half)
 
@@ -195,10 +195,10 @@ for file in files:
         else:
             print("{} already in axisEntry".format(name))
             
-with open('../CMOR3_formula_terms.json','w') as f:
+with open('CMOR3_formula_terms.json','w') as f:
     json.dump(dict(formula_entry=formulaEntries), f, indent=4, sort_keys=True)
 
-with open('../CMOR3_axes.json','w') as f:
+with open('CMOR3_axes.json','w') as f:
     json.dump(dict(axis_entry=axisEntries), f, indent=4, sort_keys=True)
 
 gridVarEntries = {}
@@ -308,5 +308,5 @@ for var in cmor2.variable_entry.keys():
                                type=vtype)
     print("Added grid variable {}".format(var))
 
-with open('../CMOR3_grid.json','w') as f:
+with open('CMOR3_grid.json','w') as f:
     json.dump(dict(axis_entry=gridAxisEntries,variable_entry=gridVarEntries), f, indent=4, sort_keys=True)
