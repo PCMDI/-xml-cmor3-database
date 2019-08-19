@@ -298,7 +298,7 @@ root = contentDoc.getroot()
 print("Create institute")
 institute = root.findall('./institute')[0]
 c.execute("begin")
-for child in institute.getchildren():
+for child in institute:
         description = child.get('description').replace("'", "\"") or ""
         iid = child.get('id') or ""
         isni = child.get('isni') or ""
@@ -322,7 +322,7 @@ print("Create model")
 
 model = root.findall('./model')[0]
 c.execute("begin")
-for child in model.getchildren():
+for child in model:
         description = child.get('description').replace("'", "\"") or ""
         mid         = child.get('id') or ""
         label       = child.get('label') or ""
@@ -339,7 +339,7 @@ model = ""
 
 print("Create activity")
 activity = root.findall('./activity')[0]
-for child in activity.getchildren():
+for child in activity:
         aid         = child.get('id') or ""
         label       = child.get('label') or ""
         status      = child.get('status') or ""
@@ -358,7 +358,7 @@ activity = ""
 
 print("Create frequency")
 frequency = root.findall('./frequency')[0]
-for child in frequency.getchildren():
+for child in frequency:
         fid         = child.get('id') or ""
         iso       = child.get('iso') or ""
         label      = child.get('label') or ""
@@ -375,7 +375,7 @@ frequency = ""
 
 print("Create realm")
 realm = root.findall('./realm')[0]
-for child in realm.getchildren():
+for child in realm:
         rid         = child.get('id') or ""
         label       = child.get('label') or ""
         title       = child.get('title') or ""
@@ -391,7 +391,7 @@ realm = ""
 
 print("Create grid")
 grid = root.findall('./grid')[0]
-for child in grid.getchildren():
+for child in grid:
         gid         = child.get('id') or ""
         label      = child.get('label') or ""
         title      = child.get('title') or ""
@@ -422,7 +422,7 @@ namespace = '{urn:w3id.org:cmip6.dreq.dreq:a}'
 axes = root.findall('./{0}main/{0}grids'.format(namespace))[0]
 print("Create Martin's dreq.xml axes")
 c.execute("begin")
-for child in axes.getchildren():
+for child in axes:
     name               = child.get('label') or ""
     if name in ['alevel', 'olevel', 'alevhalf', 'olevhalf' ]:
         continue
@@ -510,7 +510,7 @@ print("Create grid")
 
 grid = root.findall('./{0}main/{0}grids'.format(namespace))[0]
 c.execute("begin")
-for child in grid.getchildren():
+for child in grid:
         altLabel              = child.get('altLabel') or ""
         axis                  = child.get('axis') or ""             
         bounds                = child.get('bounds') or ""
@@ -541,7 +541,7 @@ for child in grid.getchildren():
                 except:
                     requested  = ""
         standardName          = child.get('standardName') or ""
-        print("CRREATE GRID STD NAME:",standardName)
+        print("CREATE GRID STD NAME:",standardName)
         tables                = child.get('tables') or ""
         title                 = child.get('title') or ""
         tolRequested          = child.get('tolRequested') or ""
@@ -580,7 +580,7 @@ grid = ""
 
 var = root.findall('./{0}main/{0}var'.format(namespace))[0]
 print("Create var")
-for child in var.getchildren():
+for child in var:
     description = child.get('description').replace("'", "\"")  or ""
     try: 
         vid     = child.get('id').replace('\'','')           or ""
@@ -620,7 +620,7 @@ CMORvar = root.findall('./{0}main/{0}CMORvar'.format(namespace))[0]
 
 print("Create CMORvar")
 
-for child in CMORvar.getchildren():
+for child in CMORvar:
     defaultPriority = child.get('defaultPriority') or ""
     deflate         = child.get('deflate')         or ""
     deflate_level   = child.get('deflate_level')   or ""
@@ -698,7 +698,7 @@ CMORvar = ""
 # ----------------------------------
 structure = root.findall('./{0}main/{0}structure'.format(namespace))[0]
 print("Create structure")
-for child in structure.getchildren():
+for child in structure:
     cell_measures   = child.get('cell_measures').replace('None', '')   or ""
     cell_methods    = child.get('cell_methods').replace('None', '')    or ""
     try:
@@ -741,7 +741,7 @@ structure = ""
 # ----------------------------------
 spatialShape = root.findall('./{0}main/{0}spatialShape'.format(namespace))[0]
 print("Create spatialShape")
-for child in spatialShape.getchildren():
+for child in spatialShape:
     dimensions       = child.get('dimensions').replace('None', '')      or ""
     label            = child.get('label').replace('None', '')           or ""
     levelFlag        = child.get('levelFlag').replace('None', '')       or ""
@@ -764,7 +764,7 @@ spatialShape = ""
 # ----------------------------------
 temporalShape = root.findall('./{0}main/{0}temporalShape'.format(namespace))[0]
 print("Create temporalShape")
-for child in temporalShape.getchildren():
+for child in temporalShape:
     dimensions            = child.get('dimensions').replace('None', '')  or ""
     label                 = child.get('label').replace('None', '') or ""
     title                 = child.get('title').replace('None', '') or ""
@@ -782,7 +782,7 @@ temporalShape = ""
 # ----------------------------------
 requestVar = root.findall('./{0}main/{0}requestVar'.format(namespace))[0]
 print("Create requestVar")
-for child in requestVar.getchildren():
+for child in requestVar:
     label                 = child.get('label') or ""
     mip                   = child.get('mip') or ""
     priority              = child.get('priority') or ""
@@ -806,7 +806,7 @@ requestVar = ""
 
 requestVarGroup = root.findall('./{0}main/{0}requestVarGroup'.format(namespace))[0]
 print("Create requestVarGrouop")
-for child in requestVarGroup.getchildren():
+for child in requestVarGroup:
     label                 = child.get('label') or ""
     mip                   = child.get('mip') or ""
     ref                   = child.get('ref') or ""
@@ -826,7 +826,7 @@ requestVarGroup = ""
 
 requestLink = root.findall('./{0}main/{0}requestLink'.format(namespace))[0]
 print("Create requestLink")
-for child in requestLink.getchildren():
+for child in requestLink:
     comment            = child.get('comment') or ""
     grid               = child.get('grid') or ""
     gridreq            = child.get('gridreq') or ""
@@ -862,7 +862,7 @@ requestLink = ""
 
 requestItem = root.findall('./{0}main/{0}requestItem'.format(namespace))[0]
 print("Create requestItem")
-for child in requestItem.getchildren():
+for child in requestItem:
     comment            = child.get('comment') or ""
     esid               = child.get('esid') or ""
     esidComment        = child.get('esidComment') or ""
@@ -898,7 +898,7 @@ requestItem = ""
 
 experiment = root.findall('./{0}main/{0}experiment'.format(namespace))[0]
 print("Create experiment")
-for child in experiment.getchildren():
+for child in experiment:
     comment      = child.get('comment') or ""
     description  = child.get('description') or ""
     egid         = child.get('egid') or ""
@@ -935,7 +935,7 @@ experiment = ""
 
 exptgroup = root.findall('./{0}main/{0}exptgroup'.format(namespace))[0]
 print("Create exptgroup")
-for child in exptgroup.getchildren():
+for child in exptgroup:
     label        = child.get('label') or ""
     ntot         = child.get('ntot') or ""
     tierMin      = child.get('tierMin') or ""
@@ -949,7 +949,7 @@ for child in exptgroup.getchildren():
 exptgroup = ""
 MIP = root.findall('./{0}main/{0}mip'.format(namespace))[0]
 print("Create MIP")
-for child in MIP.getchildren():
+for child in MIP:
     label        = child.get('label') or ""
     status       = child.get('status') or ""
     title        = child.get('title') or ""
