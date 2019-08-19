@@ -1,6 +1,249 @@
 
 import pylibconfig2 as cfg
 import json
+import sqlite3
+import xml.etree.ElementTree as ET
+import uuid
+import sys
+
+
+conn = sqlite3.connect('./CMIP6.sql3')
+conn.isolation_level = None
+c = conn.cursor()
+c.execute("""drop table if exists CMORvar""")
+c.execute("""drop table if exists axisEntry""")
+
+print("Create Tables")
+
+c.execute(""" create table CMORvar (
+        deflate text,
+        deflate_level text,
+        description text,
+        frequency text,
+        label text,
+        mipTable text,
+        modeling_realm text,
+        ok_max_mean_abs text,
+        ok_min_mean_abs text,
+        positive text,
+        prov text,
+        provNote text,
+        rowIndex text,
+        shuffle text,
+        stid text,
+        title text,
+        type text,
+        uid text,
+        valid_max text,
+        valid_min text,
+        vid text)""")
+
+c.execute(""" create table axisEntry (
+    name text,
+    axis text,
+    climatology text,
+    formula text,
+    long_name text,
+    must_have_bounds text,
+    out_name text,
+    positive text,
+    requested text,
+    requested_bounds text,
+    standard_name text,
+    stored_direction text,
+    tolerance text,
+    type text,
+    units text,
+    valid_max text,
+    valid_min text,
+    value text,
+    z_bounds_factors text,
+    z_factors text,
+    bounds_values text,
+    generic_level_name text,
+    origin text)""")
+
+
+# -----------------------------------
+# Read in dreq.xml and set namespace
+# -----------------------------------
+print("----------------------")
+print("reading file dreq.xml")
+print("----------------------")
+
+contentDoc = ET.parse("../../docs/dreq.xml")
+root = contentDoc.getroot()
+namespace = '{urn:w3id.org:cmip6.dreq.dreq:a}'
+
+# *********************************************************************
+# Create first shot of axes from Martin's table.  If axes are missing,
+# they will be created by reading CMIP5 tables
+# *********************************************************************
+axes = root.findall('./{0}main/{0}grids'.format(namespace))[0]
+print("Create Martin's dreq.xml axes")
+c.execute("begin")
+for child in axes.getchildren():
+    name               = child.get('label') or ""
+    if name in ['alevel', 'olevel', 'alevhalf', 'olevhalf' ]:
+        continue
+    caxis              = child.get('axis') or ""
+    long_name          = child.get('title') or ""
+    must_have_bounds   = child.get('bounds') or ""
+    out_name           = child.get('altLabel') or ""
+    positive           = child.get('positive') or ""
+
+    if child.get('boundsRequested'):
+        requested_bounds = str([str(x) for x in child.get('boundsRequested').split()] )
+    else:
+        requested_bounds = ""
+
+    if child.get('requested'):
+        try:
+            requested  = str([str(x) for x in child.get('requested').split()])
+        except:
+            try:
+                requested  = str([str(x) for x in child.get('requested').split()])
+            except:
+                sys.exit(1)
+    else:
+        requested  = ""
+
+    if child.get('boundsValues'):
+        bounds_values = str([float(x.replace(",","")) for x in child.get('boundsValues').split()] )
+        # convert list into string of values
+        # -----------------------------------
+        bounds_values = " ".join(str(value) for value in eval(bounds_values))
+    else:
+        bounds_values = ""
+
+    standard_name      = child.get('standardName') or ""
+    stored_direction   = child.get('direction') or ""
+    ctype              = child.get('type') or ""
+    units              = child.get('units') or ""
+    valid_max          = child.get('valid_max') or ""
+    valid_min          = child.get('valid_min') or ""
+    value              = child.get('value') or ""
+    tolerance          = ""
+    z_bounds_factors   = ""
+    z_factors          = ""
+    climatology        = ""
+    generic_level_name = ""
+    if (name == 'time2') or (name == 'time3'):
+        climatology        = "yes"
+    formula            = ""
+                        
+    cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
+    c.execute(cmd)
+    results = c.fetchall()
+    if not results:
+        cmd = """insert into axisEntry values (""" + \
+              "'" + str(name)              + "'" + """, """ \
+              "'" + str(caxis)             + "'" + """, """ \
+              "'" + str(climatology)       + "'" + """, """ \
+              "'" + str(formula)           + "'" + """, """ \
+              "'" + str(long_name)         + "'" + """, """ \
+              "'" + str(must_have_bounds)  + "'" + """, """ \
+              "'" + str(out_name)          + "'" + """, """ \
+              "'" + str(positive)          + "'" + """, """ \
+              "'" + str(requested).replace("'","\"")        + "'" + """, """ \
+              "'" + str(requested_bounds).replace("'", "\"")  + "'" + """, """ \
+              "'" + str(standard_name)     + "'" + """, """ \
+              "'" + str(stored_direction)  + "'" + """, """ \
+              "'" + str(tolerance)         + "'" + """, """ \
+              "'" + str(ctype)             + "'" + """, """ \
+              "'" + str(units)             + "'" + """, """ \
+              "'" + str(valid_max)         + "'" + """, """ \
+              "'" + str(valid_min)         + "'" + """, """ \
+              "'" + str(value)             + "'" + """, """ \
+              "'" + str(z_bounds_factors)  + "'" + """, """ \
+              "'" + str(z_factors)         + "'" + """, """ \
+              "'" + str(bounds_values)     + "'" + """, """ \
+              "'" + str(generic_level_name)     + "'" + """, """ \
+              "'" + "XML"                  + "'" + """) """
+        c.execute(cmd)
+axes=""
+c.execute("commit")
+
+# ----------------------------------
+#  Insert CMORvar in the database
+# ----------------------------------
+CMORvar = root.findall('./{0}main/{0}CMORvar'.format(namespace))[0]
+
+print("Create CMORvar")
+
+for child in CMORvar.getchildren():
+    defaultPriority = child.get('defaultPriority') or ""
+    deflate         = child.get('deflate')         or ""
+    deflate_level   = child.get('deflate_level')   or ""
+    description     = child.get('description')     or ""
+    frequency       = child.get('frequency')       or ""
+    label           = child.get('label')           or ""
+    mipTable        = child.get('mipTable')        or ""
+    modeling_realm  = child.get('modeling_realm')  or ""
+    ok_max_mean_abs = child.get('ok_max_mean_abs') or ""
+    ok_min_mean_abs = child.get('ok_min_mean_abs') or ""
+    positive        = child.get('positive')        or ""
+    prov            = child.get('prov')            or ""
+    provNote        = child.get('provNote')        or ""
+    rowIndex        = child.get('rowIndex')        or ""
+    shuffle         = child.get('shuffle')         or ""
+    stid            = child.get('stid')            or ""
+    title           = child.get('title')           or ""
+    vtype           = child.get('type')            or ""
+    uid             = child.get('uid').replace('\'','')             or ""
+    valid_max       = child.get('valid_max')       or ""
+    valid_min       = child.get('valid_min')       or ""
+    vid             = child.get('vid').replace('\'','')             or ""
+
+    defaultPriority = defaultPriority.replace('None', '')
+    deflate         = deflate.replace('None', '')
+    deflate_level   = deflate_level.replace('None', '')
+    description     = description.replace('None', '')
+    frequency       = frequency.replace('None', '')
+    label           = label.replace('None', '')
+    mipTable        = mipTable.replace('None', '')
+    modeling_realm  = modeling_realm.replace('None', '')
+    ok_max_mean_abs = ok_max_mean_abs.replace('None', '')
+    ok_min_mean_abs = ok_min_mean_abs.replace('None', '')
+    positive        = positive.replace('None', '')
+    prov            = prov.replace('None', '')
+    provNote        = provNote.replace('None', '')
+    rowIndex        = rowIndex.replace('None', '')
+    shuffle         = shuffle.replace('None', '')
+    stid            = stid.replace('None', '')
+    title           = title.replace('None', '')
+    title           = title.replace('\'', '\'\'')
+    vtype           = vtype.replace('None', '')
+    uid             = uid.replace('None', '')
+    valid_max       = valid_max.replace('None', '')
+    valid_min       = valid_min.replace('None', '')
+    vid             = vid.replace('None', '')
+    print(label)
+
+    cmd = """insert into CMORvar values (""" + \
+         "'" + deflate         + "'" + """, """ + \
+         "'" + deflate_level   + "'" + """, """ + \
+         "'" + description.replace("'", "\"")     + "'" + """, """ + \
+         "'" + frequency       + "'" + """, """ + \
+         "'" + label           + "'" + """, """ + \
+         "'" + mipTable        + "'" + """, """ + \
+         "'" + modeling_realm  + "'" + """, """ + \
+         "'" + ok_max_mean_abs + "'" + """, """ + \
+         "'" + ok_min_mean_abs + "'" + """, """ + \
+         "'" + positive        + "'" + """, """ + \
+         "'" + prov            + "'" + """, """ + \
+         "'" + provNote        + "'" + """, """ + \
+         "'" + rowIndex        + "'" + """, """ + \
+         "'" + shuffle         + "'" + """, """ + \
+         "'" + stid            + "'" + """, """ + \
+         "'" + title           + "'" + """, """ + \
+         "'" + vtype           + "'" + """, """ + \
+         "'" + uid.replace('\'','')             + "'" + """, """ + \
+         "'" + valid_max       + "'" + """, """ + \
+         "'" + valid_min       + "'" + """, """ + \
+         "'" + vid.replace('\'','')            + "'" + """) """
+    c.execute(cmd)
+CMORvar = ""
 
 formulaEntries = {}
 axisEntries = {}
@@ -166,7 +409,10 @@ for file in files:
         generic_level_name = cmor2.axis_entries.__getattribute__(axis).__getattribute__('generic_level_name')    \
                                if ('generic_level_name' in cmor2.axis_entries.__getattribute__(axis).keys())        else "" 
 
-        if name not in axisEntries.keys():
+        cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
+        c.execute(cmd)
+        results = c.fetchall()
+        if not results and name not in axisEntries.keys():
             origin = file.split("_")[1]
             axisEntries[name] = dict(name=name,       
                                      axis=caxis,
@@ -253,29 +499,33 @@ for axis in cmor2.axis_entry.keys():
     generic_level_name = ""
     origin="grid"
 
-    gridAxisEntries[name] = dict(name=name,       
-                                 axis=caxis,
-                                 climatology=climatology,
-                                 formula=formula.replace("\n","\\n"),
-                                 long_name=long_name,
-                                 must_have_bounds=must_have_bounds,
-                                 out_name=out_name,
-                                 positive=positive,
-                                 requested=requested,
-                                 requested_bounds=requested_bounds,
-                                 standard_name=standard_name,
-                                 stored_direction=stored_direction,
-                                 tolerance=str(tolerance),
-                                 type=ctype,
-                                 units=units,
-                                 valid_max=str(valid_max),
-                                 valid_min=str(valid_min),
-                                 value=str(value),
-                                 z_bounds_factors=z_bounds_factors,
-                                 z_factors=z_factors,
-                                 bounds_values=bounds_values,
-                                 generic_level_name=generic_level_name,
-                                 origin=origin)
+    cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
+    c.execute(cmd)
+    results = c.fetchall()
+    if not results:
+        gridAxisEntries[name] = dict(name=name,       
+                                     axis=caxis,
+                                     climatology=climatology,
+                                     formula=formula.replace("\n","\\n"),
+                                     long_name=long_name,
+                                     must_have_bounds=must_have_bounds,
+                                     out_name=out_name,
+                                     positive=positive,
+                                     requested=requested,
+                                     requested_bounds=requested_bounds,
+                                     standard_name=standard_name,
+                                     stored_direction=stored_direction,
+                                     tolerance=str(tolerance),
+                                     type=ctype,
+                                     units=units,
+                                     valid_max=str(valid_max),
+                                     valid_min=str(valid_min),
+                                     value=str(value),
+                                     z_bounds_factors=z_bounds_factors,
+                                     z_factors=z_factors,
+                                     bounds_values=bounds_values,
+                                     generic_level_name=generic_level_name,
+                                     origin=origin)
     print("Added grid axis {}".format(name))
 
 print("Create variable entries for grids")
@@ -298,15 +548,22 @@ for var in cmor2.variable_entry.keys():
     vtype = cmor2.variable_entry.__dict__[var].type                          \
                     if ('type' in cmor2.variable_entry.__dict__[var].keys())      else ""
 
-    gridVarEntries[var] = dict(long_name=long_name,
-                               standard_name=standard_name,
-                               units=units,
-                               dimensions=dimensions,
-                               out_name=out_name,
-                               valid_max=str(valid_max),
-                               valid_min=str(valid_min),
-                               type=vtype)
+
+    cmd = """select label from CMORvar where label = '""" + str(name).strip() + "' and mipTable='grids';"
+    c.execute(cmd)
+    results = c.fetchall()
+    if not results:
+        gridVarEntries[var] = dict(long_name=long_name,
+                                   standard_name=standard_name,
+                                   units=units,
+                                   dimensions=dimensions,
+                                   out_name=out_name,
+                                   valid_max=str(valid_max),
+                                   valid_min=str(valid_min),
+                                   type=vtype)
     print("Added grid variable {}".format(var))
 
 with open('CMOR3_grid.json','w') as f:
     json.dump(dict(axis_entry=gridAxisEntries,variable_entry=gridVarEntries), f, indent=4, sort_keys=True)
+
+c.close()
