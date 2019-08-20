@@ -1,13 +1,12 @@
 #!/usr/bin/env python
+from __future__ import print_function
 
-# sqlite> select DISTINCT vg.label from requestVar vg, requestVarGroup rvg, requestItem ri, requestLink rl where  ri.mip="GeoMIP" and ri.rlid==rl.uid and rl.refid=rvg.uid and vg.vid=rvg.uid;
 import sqlite3
+import json
 import xml.etree.ElementTree as ET
-import pylibconfig2 as cfg
 import uuid
 import sys
 import pdb
-# https://github.com/heinzK1X/pylibconfig2
 
 
 conn = sqlite3.connect('./CMIP6.sql3')
@@ -36,13 +35,13 @@ c.execute("""drop table if exists vocab_realm""")
 c.execute("""drop table if exists vocab_grid""")
 c.execute("""drop table if exists grid""")
 
-print "Create Tables"
+print("Create Tables")
 
 c.execute("""create table formulaVar (
         name      text,
         long_name text,
         type      text,
-        dimension text,
+        dimensions text,
         out_name  text,
         units      text)""")
 
@@ -219,10 +218,6 @@ c.execute(""" create table axisEntry (
     generic_level_name text,
     origin text)""")
 
-c.execute(""" create table expIDs (
-    id text,
-        title text)""")
-
 c.execute(""" create table vocab_institute (
     description text,
     id text,
@@ -292,18 +287,18 @@ c.execute(""" create table grid (
 )""")
 
 
-print "----------------------"
-print "reading file vocab.xml"
-print "----------------------"
+print("----------------------")
+print("reading file vocab.xml")
+print("----------------------")
 # -----------------------------------
 # Read in dreq.xml and set namespace
 # -----------------------------------
 contentDoc = ET.parse("../docs/vocab.xml")
 root = contentDoc.getroot()
-print "Create institute"
+print("Create institute")
 institute = root.findall('./institute')[0]
 c.execute("begin")
-for child in institute.getchildren():
+for child in institute:
         description = child.get('description').replace("'", "\"") or ""
         iid = child.get('id') or ""
         isni = child.get('isni') or ""
@@ -323,11 +318,11 @@ for child in institute.getchildren():
 institute = ""
 conn.execute("commit")
 
-print "Create model"
+print("Create model")
 
 model = root.findall('./model')[0]
 c.execute("begin")
-for child in model.getchildren():
+for child in model:
         description = child.get('description').replace("'", "\"") or ""
         mid         = child.get('id') or ""
         label       = child.get('label') or ""
@@ -342,9 +337,9 @@ for child in model.getchildren():
         c.execute(cmd)
 model = ""
 
-print "Create activity"
+print("Create activity")
 activity = root.findall('./activity')[0]
-for child in activity.getchildren():
+for child in activity:
         aid         = child.get('id') or ""
         label       = child.get('label') or ""
         status      = child.get('status') or ""
@@ -361,9 +356,9 @@ for child in activity.getchildren():
         c.execute(cmd)
 activity = ""
 
-print "Create frequency"
+print("Create frequency")
 frequency = root.findall('./frequency')[0]
-for child in frequency.getchildren():
+for child in frequency:
         fid         = child.get('id') or ""
         iso       = child.get('iso') or ""
         label      = child.get('label') or ""
@@ -378,9 +373,9 @@ for child in frequency.getchildren():
         c.execute(cmd)
 frequency = ""
 
-print "Create realm"
+print("Create realm")
 realm = root.findall('./realm')[0]
-for child in realm.getchildren():
+for child in realm:
         rid         = child.get('id') or ""
         label       = child.get('label') or ""
         title       = child.get('title') or ""
@@ -394,9 +389,9 @@ for child in realm.getchildren():
 realm = ""
 
 
-print "Create grid"
+print("Create grid")
 grid = root.findall('./grid')[0]
-for child in grid.getchildren():
+for child in grid:
         gid         = child.get('id') or ""
         label      = child.get('label') or ""
         title      = child.get('title') or ""
@@ -412,9 +407,9 @@ conn.execute("commit")
 # -----------------------------------
 # Read in dreq.xml and set namespace
 # -----------------------------------
-print "----------------------"
-print "reading file dreq.xml"
-print "----------------------"
+print("----------------------")
+print("reading file dreq.xml")
+print("----------------------")
 
 contentDoc = ET.parse("../docs/dreq.xml")
 root = contentDoc.getroot()
@@ -425,9 +420,9 @@ namespace = '{urn:w3id.org:cmip6.dreq.dreq:a}'
 # they will be created by reading CMIP5 tables
 # *********************************************************************
 axes = root.findall('./{0}main/{0}grids'.format(namespace))[0]
-print "Create Martin's dreq.xml axes"
+print("Create Martin's dreq.xml axes")
 c.execute("begin")
-for child in axes.getchildren():
+for child in axes:
     name               = child.get('label') or ""
     if name in ['alevel', 'olevel', 'alevhalf', 'olevhalf' ]:
         continue
@@ -511,11 +506,11 @@ for child in axes.getchildren():
 axes=""
 c.execute("commit")
 
-print "Create grid"
+print("Create grid")
 
 grid = root.findall('./{0}main/{0}grids'.format(namespace))[0]
 c.execute("begin")
-for child in grid.getchildren():
+for child in grid:
         altLabel              = child.get('altLabel') or ""
         axis                  = child.get('axis') or ""             
         bounds                = child.get('bounds') or ""
@@ -546,7 +541,7 @@ for child in grid.getchildren():
                 except:
                     requested  = ""
         standardName          = child.get('standardName') or ""
-        print("CRREATE GRID STD NAME:",standardName)
+        print("CREATE GRID STD NAME:",standardName)
         tables                = child.get('tables') or ""
         title                 = child.get('title') or ""
         tolRequested          = child.get('tolRequested') or ""
@@ -584,8 +579,8 @@ grid = ""
 
 
 var = root.findall('./{0}main/{0}var'.format(namespace))[0]
-print "Create var"
-for child in var.getchildren():
+print("Create var")
+for child in var:
     description = child.get('description').replace("'", "\"")  or ""
     try: 
         vid     = child.get('id').replace('\'','')           or ""
@@ -623,9 +618,9 @@ var = ""
 # ----------------------------------
 CMORvar = root.findall('./{0}main/{0}CMORvar'.format(namespace))[0]
 
-print "Create CMORvar"
+print("Create CMORvar")
 
-for child in CMORvar.getchildren():
+for child in CMORvar:
     defaultPriority = child.get('defaultPriority') or ""
     deflate         = child.get('deflate')         or ""
     deflate_level   = child.get('deflate_level')   or ""
@@ -702,8 +697,8 @@ CMORvar = ""
 #  Insert structure in the database
 # ----------------------------------
 structure = root.findall('./{0}main/{0}structure'.format(namespace))[0]
-print "Create structure"
-for child in structure.getchildren():
+print("Create structure")
+for child in structure:
     cell_measures   = child.get('cell_measures').replace('None', '')   or ""
     cell_methods    = child.get('cell_methods').replace('None', '')    or ""
     try:
@@ -745,8 +740,8 @@ structure = ""
 #  Insert spatialShape in the database
 # ----------------------------------
 spatialShape = root.findall('./{0}main/{0}spatialShape'.format(namespace))[0]
-print "Create spatialShape"
-for child in spatialShape.getchildren():
+print("Create spatialShape")
+for child in spatialShape:
     dimensions       = child.get('dimensions').replace('None', '')      or ""
     label            = child.get('label').replace('None', '')           or ""
     levelFlag        = child.get('levelFlag').replace('None', '')       or ""
@@ -768,8 +763,8 @@ spatialShape = ""
 #  Insert temporalShape in the database
 # ----------------------------------
 temporalShape = root.findall('./{0}main/{0}temporalShape'.format(namespace))[0]
-print "Create temporalShape"
-for child in temporalShape.getchildren():
+print("Create temporalShape")
+for child in temporalShape:
     dimensions            = child.get('dimensions').replace('None', '')  or ""
     label                 = child.get('label').replace('None', '') or ""
     title                 = child.get('title').replace('None', '') or ""
@@ -786,8 +781,8 @@ temporalShape = ""
 #  Insert requestVar in the database
 # ----------------------------------
 requestVar = root.findall('./{0}main/{0}requestVar'.format(namespace))[0]
-print "Create requestVar"
-for child in requestVar.getchildren():
+print("Create requestVar")
+for child in requestVar:
     label                 = child.get('label') or ""
     mip                   = child.get('mip') or ""
     priority              = child.get('priority') or ""
@@ -810,8 +805,8 @@ for child in requestVar.getchildren():
 requestVar = ""
 
 requestVarGroup = root.findall('./{0}main/{0}requestVarGroup'.format(namespace))[0]
-print "Create requestVarGrouop"
-for child in requestVarGroup.getchildren():
+print("Create requestVarGrouop")
+for child in requestVarGroup:
     label                 = child.get('label') or ""
     mip                   = child.get('mip') or ""
     ref                   = child.get('ref') or ""
@@ -830,8 +825,8 @@ for child in requestVarGroup.getchildren():
 requestVarGroup = ""
 
 requestLink = root.findall('./{0}main/{0}requestLink'.format(namespace))[0]
-print "Create requestLink"
-for child in requestLink.getchildren():
+print("Create requestLink")
+for child in requestLink:
     comment            = child.get('comment') or ""
     grid               = child.get('grid') or ""
     gridreq            = child.get('gridreq') or ""
@@ -866,8 +861,8 @@ for child in requestLink.getchildren():
 requestLink = ""
 
 requestItem = root.findall('./{0}main/{0}requestItem'.format(namespace))[0]
-print "Create requestItem"
-for child in requestItem.getchildren():
+print("Create requestItem")
+for child in requestItem:
     comment            = child.get('comment') or ""
     esid               = child.get('esid') or ""
     esidComment        = child.get('esidComment') or ""
@@ -902,8 +897,8 @@ for child in requestItem.getchildren():
 requestItem = ""
 
 experiment = root.findall('./{0}main/{0}experiment'.format(namespace))[0]
-print "Create experiment"
-for child in experiment.getchildren():
+print("Create experiment")
+for child in experiment:
     comment      = child.get('comment') or ""
     description  = child.get('description') or ""
     egid         = child.get('egid') or ""
@@ -939,8 +934,8 @@ for child in experiment.getchildren():
 experiment = ""
 
 exptgroup = root.findall('./{0}main/{0}exptgroup'.format(namespace))[0]
-print "Create exptgroup"
-for child in exptgroup.getchildren():
+print("Create exptgroup")
+for child in exptgroup:
     label        = child.get('label') or ""
     ntot         = child.get('ntot') or ""
     tierMin      = child.get('tierMin') or ""
@@ -953,8 +948,8 @@ for child in exptgroup.getchildren():
     c.execute(cmd)
 exptgroup = ""
 MIP = root.findall('./{0}main/{0}mip'.format(namespace))[0]
-print "Create MIP"
-for child in MIP.getchildren():
+print("Create MIP")
+for child in MIP:
     label        = child.get('label') or ""
     status       = child.get('status') or ""
     title        = child.get('title') or ""
@@ -968,401 +963,114 @@ for child in MIP.getchildren():
              "'" + url    + "'" + """) """
     c.execute(cmd)
 
-for file in ["./Amon_libconfig", "CMIP5_Omon_CMOR3", "CMIP5_formula_CMOR3" ]:
-    cmor2 = cfg.Config()
-    cmor2.read_file(file)
-    # Add formula variables
-    #
-    formulaVar = [key for key in cmor2.variable_entry.keys()
-                   if cmor2.variable_entry.__dict__[key].long_name.find("formula") != -1]
-    variables = [key for key in cmor2.axis_entries.keys() if hasattr(cmor2.axis_entries.__dict__[key], 'z_factors')]
+# *********************************************************
+# Load formula term entries
+# *********************************************************
+with open("CMOR3_formula_terms.json", "r") as json_file:
+    formulaVars = json.load(json_file)
 
-    z_bnds     = {key for var in variables for key in
-                  cmor2.axis_entries.__dict__[var].z_bounds_factors.split(" ")
-                  if key.find(':') == -1
-                  if key in cmor2.variable_entry.__dict__.keys()}
-    z_factors  = {key for var in variables for key in
-                  cmor2.axis_entries.__dict__[var].z_factors.split(" ")
-                  if key.find(':') == -1
-                  if key in cmor2.variable_entry.__dict__.keys()}
+print("Create formula variables")
+for key, var in formulaVars['formula_entry'].items():
+    name = var['name']
 
-    z_factors.update(z_bnds)
-
-    formulaVar = list(z_factors)
-    print "Create formula variables"
-    for var in formulaVar:
-        name = var
-        long_name = cmor2.variable_entry.__dict__[var].long_name           \
-                        if ('long_name' in
-                            cmor2.variable_entry.__dict__[var].keys()) else ""
-        ctype     = cmor2.variable_entry.__dict__[var].type                 \
-                        if ('type' in
-                            cmor2.variable_entry.__dict__[var].keys()) else ""
-        dimension = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])\
-                        if ('dimensions' in
-                            cmor2.variable_entry.__dict__[var].keys()) else ""
-        units     = cmor2.variable_entry.__dict__[var].units                \
-                        if ('units' in
-                            cmor2.variable_entry.__dict__[var].keys()) else ""
-        out_name     = cmor2.variable_entry.__dict__[var].out_name          \
-                        if ('out_name' in
-                            cmor2.variable_entry.__dict__[var].keys()) else name
-
-        print out_name
-        cmd = """select name from formulaVar where name = '""" + str(name).strip() + "';"
-        c.execute(cmd)
-        results = c.fetchall()
-        if not results:
-            print "\tOk adding {} from this table".format(name)
-            cmd = """insert into formulaVar values (""" + \
-                  "'" + str(name)              + "'" + """, """ \
-                  "'" + str(long_name)         + "'" + """, """ \
-                  "'" + str(ctype)             + "'" + """, """ \
-                  "'" + str(dimension)         + "'" + """, """ \
-                  "'" + str(out_name)         + "'" + """, """ \
-                  "'" + str(units)             + "'" + """) """
-
-        c.execute(cmd)
-
-    print "Create axes"
-    for axis in cmor2.axis_entries.keys():
-        #    for item in cmor2.axis_entries.__getattribute__(axis).keys():
-        #        print item
-        name               = axis
-        caxis              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('axis')             \
-                               if ('axis'             in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        climatology        = cmor2.axis_entries.__getattribute__(axis).__getattribute__('climatology')      \
-                               if ('climatology'      in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        formula            = cmor2.axis_entries.__getattribute__(axis).__getattribute__('formula')          \
-                               if ('formula'          in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        long_name          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('long_name')        \
-                               if ('long_name'        in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        must_have_bounds   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('must_have_bounds') \
-                               if ('must_have_bounds' in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        out_name           = cmor2.axis_entries.__getattribute__(axis).__getattribute__('out_name')         \
-                               if ('out_name'       in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        positive           = cmor2.axis_entries.__getattribute__(axis).__getattribute__('positive').strip()         \
-                               if ('positive'       in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        requested          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('requested')        \
-                               if ('requested'      in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        requested_bounds   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('requested_bounds')        \
-                               if ('requested_bounds'  in cmor2.axis_entries.__getattribute__(axis).keys())    else ""
-        standard_name      = cmor2.axis_entries.__getattribute__(axis).__getattribute__('standard_name')    \
-                               if ('standard_name'  in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        stored_direction   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('stored_direction') \
-                               if ('stored_direction' in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        tolerance          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('tolerance')        \
-                               if ('tolerance' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        ctype              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('type')             \
-                               if ('type'      in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        units              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('units')            \
-                               if ('units'     in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        valid_max          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('valid_max')        \
-                               if ('valid_max' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        valid_min          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('valid_min')        \
-                               if ('valid_min' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        value              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('value')            \
-                               if ('value'     in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        z_bounds_factors   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('z_bounds_factors') \
-                               if ('z_bounds_factors'    in cmor2.axis_entries.__getattribute__(axis).keys())  else ""
-        z_factors          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('z_factors')        \
-                               if ('z_factors' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        bounds_values      = cmor2.axis_entries.__getattribute__(axis).__getattribute__('bounds_values')    \
-                               if ('bounds_values'  in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-
-#        cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
-#        c.execute(cmd)
-#        results = c.fetchall()
-#        if not results:
-#            cmd = """insert into axisEntry values (""" + \
-#                  "'" + str(name)              + "'" + """, """ \
-#                  "'" + str(caxis)             + "'" + """, """ \
-#                  "'" + str(climatology)       + "'" + """, """ \
-#                  "'" + str(formula)           + "'" + """, """ \
-#                  "'" + str(long_name)         + "'" + """, """ \
-#                  "'" + str(must_have_bounds)  + "'" + """, """ \
-#                  "'" + str(out_name)          + "'" + """, """ \
-#                  "'" + str(positive)          + "'" + """, """ \
-#                  "'" + str(requested)         + "'" + """, """ \
-#                  "'" + str(requested_bounds)  + "'" + """, """ \
-#                  "'" + str(standard_name)     + "'" + """, """ \
-#                  "'" + str(stored_direction)  + "'" + """, """ \
-#                  "'" + str(tolerance)    + "'" + """, """ \
-#                  "'" + str(ctype)             + "'" + """, """ \
-#                  "'" + str(units)             + "'" + """, """ \
-#                  "'" + str(valid_max)    + "'" + """, """ \
-#                  "'" + str(valid_min)    + "'" + """, """ \
-#                  "'" + str(value)        + "'" + """, """ \
-#                  "'" + str(z_bounds_factors)  + "'" + """, """ \
-#                  "'" + str(z_factors)         + "'" + """, """ \
-#                  "'" + str(bounds_values)     + "'" + """, """ \
-#                  "'" + "Amon"                 + "'" + """) """
-#            c.execute(cmd)
-#            conn.commit()
-
-
-cmor2 = cfg.Config()
-cmor2.read_file("./Amon_libconfig")
-for expt in cmor2.expt_ids:
-    eid                = expt.id or ""
-    title              = expt.title or ""
-    cmd = """insert into expIDs values (""" + \
-          "'" + str(eid)              + "'" + """, """ \
-          "'" + str(title)             + "'" + """) """
+    print(var['out_name'])
+    cmd = """select name from formulaVar where name = '""" + str(name).strip() + "';"
     c.execute(cmd)
+    results = c.fetchall()
+    if not results:
+        print("\tOk adding {} from this table".format(name))
+        columns = ", ".join(var.keys())
+        placeholders = ", ".join([":"+k for k in var.keys()])
+        cmd = "insert into formulaVar ({}) values ({})".format(columns, placeholders)
+        c.execute(cmd, var)
+
 # *********************************************************
-# CMOR 3 files are libconfig2 format from old CMOR2 tables
+# Load axis entries
 # *********************************************************
-files = ["./CMIP5_Omon_CMOR3", "./CMIP6_OImon_CMOR3", "./CMIP6_LImon_CMOR3",
-         "./CMIP6_Lmon_CMOR3", "./CMIP5_3hr_CMOR3",
-         "./CMIP5_cfSites_CMOR3", "./CMIP5_cf3hr_CMOR3", "./CMIP5_cfMon_CMOR3"]
-#, "./CMIP6_new_axis_CMOR3" ]
-for file in files:
-    print "reading file" + file
-    cmor2 = cfg.Config()
-    cmor2.read_file(file)
-    # Add formula variables
-    #
+with open("CMOR3_axes.json", "r") as json_file:
+    axisVars = json.load(json_file)
 
-    variables = [key for key in cmor2.axis_entries.keys()
-                 if hasattr(cmor2.axis_entries.__dict__[key], 'z_factors')]
+print("Create axis entries")
+for key, var in axisVars['axis_entry'].items():
+    name = var['name']
 
-    z_bnds     = {key for var in variables for key in cmor2.axis_entries.__dict__[var].z_bounds_factors.split(" ")
-                  if key.find(':') == -1  if key in cmor2.variable_entry.__dict__.keys()}
-    z_factors  = {key for var in variables for key in cmor2.axis_entries.__dict__[var].z_factors.split(" ") if key.find(':') == -1
-                  if key in cmor2.variable_entry.__dict__.keys()}
-
-    half = { key for key in cmor2.variable_entry.keys() if key.find("_half")>-1 }
-    print "HALF:",half
-    z_factors.update(z_bnds)
-    z_factors.update(half)
-
-    formulaVar = list(z_factors)
-    print "Create formula variables"
-    for var in formulaVar:
-        name = var
-        long_name = cmor2.variable_entry.__dict__[var].long_name                     \
-                        if ('long_name' in cmor2.variable_entry.__dict__[var].keys()) else ""
-        ctype     = cmor2.variable_entry.__dict__[var].type                          \
-                        if ('type' in cmor2.variable_entry.__dict__[var].keys())      else ""
-        dimension = " ".join(cmor2.variable_entry.__dict__[var].dimensions[:])       \
-                        if ('dimensions' in cmor2.variable_entry.__dict__[var].keys()) else ""
-        out_name     = cmor2.variable_entry.__dict__[var].out_name          \
-                        if ('out_name' in cmor2.variable_entry.__dict__[var].keys()) else name
-        units     = cmor2.variable_entry.__dict__[var].units                         \
-                        if ('units' in cmor2.variable_entry.__dict__[var].keys())     else ""
-
-        cmd = """select name from formulaVar where name = '""" + str(name).strip() + "';"
-        c.execute(cmd)
-        results = c.fetchall()
-        if not results:
-            print "\tOk adding {}/{} from this table {}".format(name, out_name, file)
-            cmd = """insert into formulaVar values (""" + \
-                  "'" + str(name)              + "'" + """, """ \
-                  "'" + str(long_name)         + "'" + """, """ \
-                  "'" + str(ctype)             + "'" + """, """ \
-                  "'" + str(dimension)         + "'" + """, """ \
-                  "'" + str(out_name)         + "'" + """, """ \
-                  "'" + str(units)             + "'" + """) """
-
-            c.execute(cmd)
-
-    print "Create axes"
-    for axis in cmor2.axis_entries.keys():
-        #
-        #    for item in cmor2.axis_entries.__getattribute__(axis).keys():
-        #        print item
-        #
-        name               = axis
-        caxis              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('axis')             \
-                               if ('axis'             in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        climatology        = cmor2.axis_entries.__getattribute__(axis).__getattribute__('climatology')      \
-                               if ('climatology'      in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        formula            = cmor2.axis_entries.__getattribute__(axis).__getattribute__('formula')          \
-                               if ('formula'          in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        long_name          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('long_name')        \
-                               if ('long_name'        in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        must_have_bounds   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('must_have_bounds') \
-                               if ('must_have_bounds' in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        out_name           = cmor2.axis_entries.__getattribute__(axis).__getattribute__('out_name')         \
-                               if ('out_name'       in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        positive           = cmor2.axis_entries.__getattribute__(axis).__getattribute__('positive').strip()         \
-                               if ('positive'       in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        requested          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('requested')        \
-                               if ('requested'      in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        requested_bounds   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('requested_bounds')        \
-                               if ('requested_bounds'  in cmor2.axis_entries.__getattribute__(axis).keys())    else ""
-        standard_name      = cmor2.axis_entries.__getattribute__(axis).__getattribute__('standard_name')    \
-                               if ('standard_name'  in cmor2.axis_entries.__getattribute__(axis).keys())       else ""
-        stored_direction   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('stored_direction') \
-                               if ('stored_direction' in cmor2.axis_entries.__getattribute__(axis).keys())     else ""
-        tolerance          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('tolerance')        \
-                               if ('tolerance' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        ctype              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('type')             \
-                               if ('type'      in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        units              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('units')            \
-                               if ('units'     in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        valid_max          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('valid_max')        \
-                               if ('valid_max' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        valid_min          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('valid_min')        \
-                               if ('valid_min' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        value              = cmor2.axis_entries.__getattribute__(axis).__getattribute__('value')            \
-                               if ('value'     in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        z_bounds_factors   = cmor2.axis_entries.__getattribute__(axis).__getattribute__('z_bounds_factors') \
-                               if ('z_bounds_factors'    in cmor2.axis_entries.__getattribute__(axis).keys())  else ""
-        z_factors          = cmor2.axis_entries.__getattribute__(axis).__getattribute__('z_factors')        \
-                               if ('z_factors' in cmor2.axis_entries.__getattribute__(axis).keys())            else ""
-        bounds_values      = cmor2.axis_entries.__getattribute__(axis).__getattribute__('bounds_values')    \
-                               if ('bounds_values' in cmor2.axis_entries.__getattribute__(axis).keys())        else ""
-        generic_level_name = cmor2.axis_entries.__getattribute__(axis).__getattribute__('generic_level_name')    \
-                               if ('generic_level_name' in cmor2.axis_entries.__getattribute__(axis).keys())        else "" 
-
-        cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
-        c.execute(cmd)
-        results = c.fetchall()
-        if not results:
-            tkFile = file.split("_")[1]
-            cmd = """insert into axisEntry values (""" + \
-                  "'" + str(name)              + "'" + """, """ \
-                  "'" + str(caxis)             + "'" + """, """ \
-                  "'" + str(climatology)       + "'" + """, """ \
-                  "'" + str(formula).replace("\n","\\n")           + "'" + """, """ \
-                  "'" + str(long_name)         + "'" + """, """ \
-                  "'" + str(must_have_bounds)  + "'" + """, """ \
-                  "'" + str(out_name)          + "'" + """, """ \
-                  "'" + str(positive)          + "'" + """, """ \
-                  "'" + str(requested)         + "'" + """, """ \
-                  "'" + str(requested_bounds)  + "'" + """, """ \
-                  "'" + str(standard_name)     + "'" + """, """ \
-                  "'" + str(stored_direction)  + "'" + """, """ \
-                  "'" + str(tolerance)    + "'" + """, """ \
-                  "'" + str(ctype)             + "'" + """, """ \
-                  "'" + str(units)             + "'" + """, """ \
-                  "'" + str(valid_max)    + "'" + """, """ \
-                  "'" + str(valid_min)    + "'" + """, """ \
-                  "'" + str(value)        + "'" + """, """ \
-                  "'" + str(z_bounds_factors)  + "'" + """, """ \
-                  "'" + str(z_factors)         + "'" + """, """ \
-                  "'" + str(bounds_values)         + "'" + """, """ \
-                  "'" + str(generic_level_name)         + "'" + """, """ \
-                  "'" + str(tkFile)            + "'" + """) """
-            c.execute(cmd)
-
-cmor2 = cfg.Config()
-cmor2.read_file("./CMIP5_grids_CMOR3")
-print "Create axes for grids"
-for axis in cmor2.axis_entry.keys():
-    print("FROM CMIP5_grids_CMOR3",axis)
-    name               = axis
-    caxis              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('axis')             \
-                           if ('axis'             in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-    climatology        = cmor2.axis_entry.__getattribute__(axis).__getattribute__('climatology')      \
-                           if ('climatology'      in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-    formula            = cmor2.axis_entry.__getattribute__(axis).__getattribute__('formula')          \
-                           if ('formula'          in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-    long_name          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('long_name')        \
-                           if ('long_name'        in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-    must_have_bounds   = cmor2.axis_entry.__getattribute__(axis).__getattribute__('must_have_bounds') \
-                           if ('must_have_bounds' in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-    out_name           = cmor2.axis_entry.__getattribute__(axis).__getattribute__('out_name')         \
-                           if ('out_name'       in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-    positive           = cmor2.axis_entry.__getattribute__(axis).__getattribute__('positive').strip()         \
-                           if ('positive'       in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-    requested          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('requested')        \
-                           if ('requested'      in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-    requested_bounds   = cmor2.axis_entry.__getattribute__(axis).__getattribute__('requested_bounds')        \
-                           if ('requested_bounds'  in cmor2.axis_entry.__getattribute__(axis).keys())  else ""
-    standard_name      = cmor2.axis_entry.__getattribute__(axis).__getattribute__('standard_name')    \
-                           if ('standard_name'  in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-    stored_direction   = cmor2.axis_entry.__getattribute__(axis).__getattribute__('stored_direction') \
-                           if ('stored_direction' in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-    tolerance          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('tolerance')        \
-                           if ('tolerance' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-    ctype              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('type')             \
-                           if ('type'      in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-    units              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('units')            \
-                           if ('units'     in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-    valid_max          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('valid_max')        \
-                           if ('valid_max' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-    valid_min          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('valid_min')        \
-                           if ('valid_min' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-    value              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('value')            \
-                           if ('value'     in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-    z_bounds_factors   = cmor2.axis_entry.__getattribute__(axis).__getattribute__('z_bounds_factors') \
-                           if ('z_bounds_factors'    in cmor2.axis_entry.__getattribute__(axis).keys())  else ""
-    z_factors          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('z_factors')        \
-                           if ('z_factors' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-    bounds_values      = cmor2.axis_entry.__getattribute__(axis).__getattribute__('bounds_values')    \
-                           if ('bounds_values' in cmor2.axis_entry.__getattribute__(axis).keys())        else ""
-    generic_level_name = ""
+    print(var['out_name'])
     cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
     c.execute(cmd)
     results = c.fetchall()
-
     if not results:
-        print("\tADDING TO DB")
-        cmd = """insert into axisEntry values (""" + \
-              "'" + str(name)              + "'" + """, """ \
-              "'" + str(caxis)             + "'" + """, """ \
-              "'" + str(climatology)       + "'" + """, """ \
-              "'" + str(formula)           + "'" + """, """ \
-              "'" + str(long_name)         + "'" + """, """ \
-              "'" + str(must_have_bounds)  + "'" + """, """ \
-              "'" + str(out_name)          + "'" + """, """ \
-              "'" + str(positive)          + "'" + """, """ \
-              "'" + str(requested)         + "'" + """, """ \
-              "'" + str(requested_bounds)  + "'" + """, """ \
-              "'" + str(standard_name)     + "'" + """, """ \
-              "'" + str(stored_direction)  + "'" + """, """ \
-              "'" + str(tolerance)    + "'" + """, """ \
-              "'" + str(ctype)             + "'" + """, """ \
-              "'" + str(units)             + "'" + """, """ \
-              "'" + str(valid_max)    + "'" + """, """ \
-              "'" + str(valid_min)    + "'" + """, """ \
-              "'" + str(value)        + "'" + """, """ \
-              "'" + str(z_bounds_factors)  + "'" + """, """ \
-              "'" + str(z_factors)         + "'" + """, """ \
-              "'" + str(bounds_values)         + "'" + """, """ \
-              "'" + str(generic_level_name)         + "'" + """, """ \
-              "'grid') """
-        c.execute(cmd)
-    else:
-        print("\tRESULTS:",results)
+        print("\tOk adding {} from this table".format(name))
+        # Turn list of strings into a string of a list with double-quoted elements
+        if var['requested'] != "":
+            var['requested'] = '['+(', '.join(['"{}"'.format(v) for v in var['requested']]))+']'
+        if var['requested_bounds'] != "":
+            var['requested_bounds'] = '['+(', '.join(['"{}"'.format(v) for v in var['requested_bounds']]))+']'
+        columns = ", ".join(var.keys())
+        placeholders = ", ".join([":"+k for k in var.keys()])
+        cmd = "insert into axisEntry ({}) values ({})".format(columns, placeholders)
+        c.execute(cmd, var)
 
-gridVar = [key for key in cmor2.variable_entry.keys()]
+# *********************************************************
+# Load grid axis entries
+# *********************************************************
+with open("CMOR3_grid.json", "r") as json_file:
+    gridVars = json.load(json_file)
 
-print "Create grid variables"
+for key, var in gridVars['axis_entry'].items():
+    name = var['name']
+
+    print(var['out_name'])
+    cmd = """select name from axisEntry where name = '""" + str(name).strip() + "';"
+    c.execute(cmd)
+    results = c.fetchall()
+    if not results:
+        print("\tOk adding {} from this table".format(name))
+        # Turn list of strings into a string of a list with double-quoted elements
+        if var['requested'] != "":
+            var['requested'] = '['+(', '.join(['"{}"'.format(v) for v in var['requested']]))+']'
+        if var['requested_bounds'] != "":
+            var['requested_bounds'] = '['+(', '.join(['"{}"'.format(v) for v in var['requested_bounds']]))+']'
+        columns = ", ".join(var.keys())
+        placeholders = ", ".join([":"+k for k in var.keys()])
+        cmd = "insert into axisEntry ({}) values ({})".format(columns, placeholders)
+        c.execute(cmd, var)
+
+# *********************************************************
+# Load grid variable entries
+# *********************************************************
+print("Create grid variables")
 
 ssLabelTmpl = "grid-"
-for var in gridVar:
+for name, var in gridVars['variable_entry'].items():
     count = 1
     ssLabel = ssLabelTmpl + str(count)
 
-    name = var
-    deflate         = ""
-    deflate_level   = ""
-    description     = ""
-    frequency       = ""
-    label           = ""
-    mipTable        = ""
-    modeling_realm  = ""
-    ok_max_mean_abs = ""
-    ok_min_mean_abs = ""
-    positive        = ""
-    prov            = ""
-    provNote        = ""
-    rowIndex        = ""
-    shuffle         = ""
-    stid            = ""
-    title           = ""
-    vtype           = ""
-    uid             = ""
-    valid_max       = ""
-    valid_min       = ""
-    vid             = ""
+    gridVar = dict(
+        deflate         = "",
+        deflate_level   = "",
+        description     = "",
+        frequency       = "",
+        label           = name,
+        mipTable        = "grids",
+        modeling_realm  = "",
+        ok_max_mean_abs = "",
+        ok_min_mean_abs = "",
+        positive        = "",
+        prov            = "",
+        provNote        = "",
+        rowIndex        = "",
+        shuffle         = "",
+        stid            = "",
+        title           = "",
+        type            = var['type'],
+        uid             = "",
+        valid_max       = var['valid_max'],
+        valid_min       = var['valid_min'],
+        vid             = "",
+    )
 
-    dimensions  = "|".join(cmor2.variable_entry.__dict__[var].dimensions)
-    print dimensions
+    dimensions  = var['dimensions'].replace(' ','|')
+    print(dimensions)
     cmd = """select uid from spatialShape where dimensions = '""" + dimensions + "';"
     c.execute(cmd)
     results = c.fetchall()
@@ -1382,7 +1090,7 @@ for var in gridVar:
         c.execute(cmd)
     else:
         spid=results[0][0]
-    print spid
+    print(spid)
     stid = uuid.uuid4().urn.split(':')[2]
     cmd = """insert into structure values (""" + \
                  "'area:areacella'" + """, """ + \
@@ -1407,8 +1115,7 @@ for var in gridVar:
     c.execute(cmd)
     results = c.fetchall()
     if not results:
-        units     = cmor2.variable_entry.__dict__[var].units \
-            if ('units' in cmor2.variable_entry.__dict__[var].keys()) else ""
+        units     = var['units']
         vid = uuid.uuid4().urn.split(':')[2]
         cmd = """insert into var values (""" + \
                  "'grid variable'" + """, """ + \
@@ -1426,21 +1133,6 @@ for var in gridVar:
     else:
         vid = results[0][0]
 
-    long_name = cmor2.variable_entry.__dict__[var].long_name                     \
-                    if ('long_name' in cmor2.variable_entry.__dict__[var].keys()) else ""
-    standard_name = cmor2.variable_entry.__dict__[var].standard_name                          \
-                    if ('standard_name' in cmor2.variable_entry.__dict__[var].keys())      else ""
-    units     = cmor2.variable_entry.__dict__[var].units                         \
-                    if ('units' in cmor2.variable_entry.__dict__[var].keys())     else ""
-    out_name  = cmor2.variable_entry.__dict__[var].out_name                          \
-                    if ('out_name ' in cmor2.variable_entry.__dict__[var].keys())      else ""
-    valid_min = cmor2.variable_entry.__dict__[var].valid_min                          \
-                    if ('valid_min' in cmor2.variable_entry.__dict__[var].keys())      else ""
-    valid_max = cmor2.variable_entry.__dict__[var].valid_max                          \
-                    if ('valid_max' in cmor2.variable_entry.__dict__[var].keys())      else ""
-    vtype = cmor2.variable_entry.__dict__[var].type                          \
-                    if ('type' in cmor2.variable_entry.__dict__[var].keys())      else ""
-
     cmd = """select label from CMORvar where label = '""" + str(name).strip() + "' and mipTable='grids';"
     c.execute(cmd)
     results = c.fetchall()
@@ -1448,106 +1140,13 @@ for var in gridVar:
     # grid
     #
     if not results:
-        mipTable = "grids"
-        label = name
-        cmd = """insert into CMORvar values (""" + \
-             "'" + deflate         + "'" + """, """ + \
-             "'" + deflate_level   + "'" + """, """ + \
-             "'" + description.replace("'", "\"")     + "'" + """, """ + \
-             "'" + frequency       + "'" + """, """ + \
-             "'" + label           + "'" + """, """ + \
-             "'" + mipTable        + "'" + """, """ + \
-             "'" + modeling_realm  + "'" + """, """ + \
-             "'" + ok_max_mean_abs + "'" + """, """ + \
-             "'" + ok_min_mean_abs + "'" + """, """ + \
-             "'" + positive        + "'" + """, """ + \
-             "'" + prov            + "'" + """, """ + \
-             "'" + provNote        + "'" + """, """ + \
-             "'" + rowIndex        + "'" + """, """ + \
-             "'" + shuffle         + "'" + """, """ + \
-             "'" + stid            + "'" + """, """ + \
-             "'" + title           + "'" + """, """ + \
-             "'" + vtype           + "'" + """, """ + \
-             "'" + uid.replace('\'','')             + "'" + """, """ + \
-             "'" + str(valid_max)  + "'" + """, """ + \
-             "'" + str(valid_min)  + "'" + """, """ + \
-             "'" + vid.replace('\'','')             + "'" + """) """
-
-        c.execute(cmd)
+        gridVar['stid'] = stid 
+        gridVar['vid'] = vid.replace('\'','') 
+        columns = ", ".join(gridVar.keys())
+        placeholders = ", ".join([":"+k for k in gridVar.keys()])
+        cmd = "insert into CMORvar ({}) values ({})".format(columns, placeholders)
+        c.execute(cmd, gridVar)
 
 c.execute("commit")
-###  Work on cfMon
-#cmor2=cfg.Config()
-#cmor2.read_file("./CMIP5_cfMon_CMOR3")
-#print "Create axes for cfMon"
-#for axis in cmor2.axis_entry.keys():
-#   name               = axis
-#   caxis              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('axis')             \
-#                          if ('axis'             in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-#   climatology        = cmor2.axis_entry.__getattribute__(axis).__getattribute__('climatology')      \
-#                          if ('climatology'      in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-#   formula            = cmor2.axis_entry.__getattribute__(axis).__getattribute__('formula')          \
-#                          if ('formula'          in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-#   long_name          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('long_name')        \
-#                          if ('long_name'        in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-#   must_have_bounds   = cmor2.axis_entry.__getattribute__(axis).__getattribute__('must_have_bounds') \
-#                          if ('must_have_bounds' in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-#   out_name           = cmor2.axis_entry.__getattribute__(axis).__getattribute__('out_name')         \
-#                          if ('out_name'       in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-#   positive           = cmor2.axis_entry.__getattribute__(axis).__getattribute__('positive').strip()         \
-#                          if ('positive'       in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-#   requested          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('requested')        \
-#                          if ('requested'      in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-#   standard_name      = cmor2.axis_entry.__getattribute__(axis).__getattribute__('standard_name')    \
-#                          if ('standard_name'  in cmor2.axis_entry.__getattribute__(axis).keys())       else ""
-#   stored_direction   = cmor2.axis_entry.__getattribute__(axis).__getattribute__('stored_direction') \
-#                          if ('stored_direction' in cmor2.axis_entry.__getattribute__(axis).keys())     else ""
-#   tolerance          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('tolerance')        \
-#                          if ('tolerance' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-#   ctype              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('type')             \
-#                          if ('type'      in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-#   units              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('units')            \
-#                          if ('units'     in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-#   valid_max          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('valid_max')        \
-#                          if ('valid_max' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-#   valid_min          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('valid_min')        \
-#                          if ('valid_min' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-#   value              = cmor2.axis_entry.__getattribute__(axis).__getattribute__('value')            \
-#                          if ('value'     in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-#   z_bounds_factors   = cmor2.axis_entry.__getattribute__(axis).__getattribute__('z_bounds_factors') \
-#                          if ('z_bounds_factors'    in cmor2.axis_entry.__getattribute__(axis).keys())  else ""
-#   z_factors          = cmor2.axis_entry.__getattribute__(axis).__getattribute__('z_factors')        \
-#                          if ('z_factors' in cmor2.axis_entry.__getattribute__(axis).keys())            else ""
-#
-#
-#   cmd = """select name from axisEntry where name = '"""+str(name)+"';"
-#   c.execute(cmd)
-#   results = c.fetchall()
-#
-#   if not results:
-#       cmd = """insert into axisEntry values ("""+ \
-#             "'" + str(name)              + "'" + """, """ \
-#             "'" + str(caxis)             + "'" + """, """ \
-#             "'" + str(climatology)       + "'" + """, """ \
-#             "'" + str(formula)           + "'" + """, """ \
-#             "'" + str(long_name)         + "'" + """, """ \
-#             "'" + str(must_have_bounds)  + "'" + """, """ \
-#             "'" + str(out_name)          + "'" + """, """ \
-#             "'" + str(positive)          + "'" + """, """ \
-#             "'" + str(requested)         + "'" + """, """ \
-#             "'" + str(standard_name)     + "'" + """, """ \
-#             "'" + str(stored_direction)  + "'" + """, """ \
-#             "'" + str(tolerance)    + "'" + """, """ \
-#             "'" + str(ctype)             + "'" + """, """ \
-#             "'" + str(units)             + "'" + """, """ \
-#             "'" + str(valid_max)    + "'" + """, """ \
-#             "'" + str(valid_min)    + "'" + """, """ \
-#             "'" + str(value)        + "'" + """, """ \
-#             "'" + str(z_bounds_factors)  + "'" + """, """ \
-#             "'" + str(z_factors)         + "'" + """, """ \
-#             "'cfMon') """
-#       c.execute(cmd)
-#       conn.commit()
-#
 
 c.close()

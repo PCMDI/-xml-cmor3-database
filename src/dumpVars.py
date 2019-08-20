@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import CMOR3Table
 import json
 
@@ -47,5 +49,5 @@ for MIP in MIPs:
 		currentVarDict['timeDimension']     = temporalShape[0]
 		currentVarDict['timeLabel']         = temporalShape[1]
 AllVars.close()
-print json.dumps(cmor3Table, indent=4)
+print(json.dumps(cmor3Table, indent=4))
 

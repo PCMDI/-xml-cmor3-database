@@ -1,4 +1,6 @@
 #!/bin/env python
+from __future__ import print_function
+
 import sqlite3
 import json
 conn = sqlite3.connect('./CMIP6.sql3')
@@ -311,7 +313,7 @@ def QueryAll():
                     currentVarDict['timeDimension']     = temporalShape[0]
                     currentVarDict['timeLabel']         = temporalShape[1]
     c.close()
-    print json.dumps(cmor3Table, indent=4)
+    print(json.dumps(cmor3Table, indent=4))
 
         # ----------------------
         # Extract all variables
