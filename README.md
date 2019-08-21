@@ -10,7 +10,7 @@
     ```
     bash buildCMIP6Tables.sh 01.00.XX
     ```
-3. Copy the CMIP6 tables from `tables` into the table directory of [cmip6-cmor-tables](https://github.com/PCMDI/cmip6-cmor-tables).
+3. Copy the CMIP6 tables from `tables` into the table directory of [cmip6-cmor-tables](https://github.com/PCMDI/cmip6-cmor-tables) to push updates for CMOR's CMIP6 tables.
     ```
     cp ../tables/CMIP6_*.json ~/git/cmip6-cmor-tables/Tables
     ```
