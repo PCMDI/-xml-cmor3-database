@@ -6,9 +6,13 @@
     ```
     cd src
     ```
-2. Run `bash buildCMIP6Tables.sh <DREQ-VERSION>` to get the latest changes from the [SVN repository](http://proj.badc.rl.ac.uk/svn/exarch/CMIP6dreq/tags/) for the provided data request version.  This script will then use the data request to form a database that will be used to create the CMIP6 CMOR tables.
+2. Run `bash updateDreqXML.sh <DREQ-VERSION>` to get the latest changes from the [SVN repository](http://proj.badc.rl.ac.uk/svn/exarch/CMIP6dreq/tags/) for the provided data request version.  This script will update the data request XML stored in `docs`.
     ```
-    bash buildCMIP6Tables.sh 01.00.XX
+    bash updateDreqXML.sh 01.00.XX
+    ```
+3. Run `bash buildCMIP6Tables.sh` to create the CMIP6 CMOR tables using the data request XML stored in `docs`.
+    ```
+    bash buildCMIP6Tables.sh
     ```
 3. Copy the CMIP6 tables from `tables` into the table directory of [cmip6-cmor-tables](https://github.com/PCMDI/cmip6-cmor-tables) to push updates for CMOR's CMIP6 tables.
     ```
