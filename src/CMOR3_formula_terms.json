@@ -2,7 +2,7 @@
     "formula_entry": {
         "a": {
             "dimensions": "alevel",
-            "long_name": "vertical coordinate formula term: a(k)",
+            "long_name": "vertical coordinate formula term: a",
             "name": "a",
             "out_name": "a",
             "type": "double",
@@ -18,7 +18,7 @@
         },
         "ap": {
             "dimensions": "alevel",
-            "long_name": "vertical coordinate formula term: ap(k)",
+            "long_name": "vertical coordinate formula term: ap",
             "name": "ap",
             "out_name": "ap",
             "type": "double",
@@ -34,7 +34,7 @@
         },
         "b": {
             "dimensions": "alevel",
-            "long_name": "vertical coordinate formula term: b(k)",
+            "long_name": "vertical coordinate formula term: b",
             "name": "b",
             "out_name": "b",
             "type": "double",
@@ -50,7 +50,7 @@
         },
         "depth": {
             "dimensions": "longitude latitude",
-            "long_name": "Sea Floor Depth: formula term: thetao",
+            "long_name": "Sea Floor Depth",
             "name": "depth",
             "out_name": "depth",
             "type": "real",
@@ -66,7 +66,7 @@
         },
         "eta": {
             "dimensions": "longitude latitude time",
-            "long_name": "Sea Surface Height formula term: thetao",
+            "long_name": "Sea Surface Height",
             "name": "eta",
             "out_name": "eta",
             "type": "real",
@@ -74,7 +74,7 @@
         },
         "eta2": {
             "dimensions": "longitude latitude time2",
-            "long_name": "Sea Surface Height formula term: thetao",
+            "long_name": "Sea Surface Height",
             "name": "eta2",
             "out_name": "eta",
             "type": "real",
@@ -122,7 +122,7 @@
         },
         "ps1": {
             "dimensions": "longitude latitude time1",
-            "long_name": "vertical coordinate formula term: ps",
+            "long_name": "Surface Air Pressure",
             "name": "ps1",
             "out_name": "ps",
             "type": "real",
@@ -130,7 +130,7 @@
         },
         "ps2": {
             "dimensions": "longitude latitude time2",
-            "long_name": "vertical coordinate formula term: ps",
+            "long_name": "Surface Air Pressure",
             "name": "ps2",
             "out_name": "ps",
             "type": "real",
