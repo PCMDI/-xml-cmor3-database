@@ -5,6 +5,7 @@
             "long_name": "vertical coordinate formula term: a",
             "name": "a",
             "out_name": "a",
+            "standard_name": "",
             "type": "double",
             "units": ""
         },
@@ -13,6 +14,7 @@
             "long_name": "vertical coordinate formula term: a(k+1/2)",
             "name": "a_bnds",
             "out_name": "a_bnds",
+            "standard_name": "",
             "type": "double",
             "units": ""
         },
@@ -21,6 +23,7 @@
             "long_name": "vertical coordinate formula term: ap",
             "name": "ap",
             "out_name": "ap",
+            "standard_name": "",
             "type": "double",
             "units": "Pa"
         },
@@ -29,6 +32,7 @@
             "long_name": "vertical coordinate formula term: ap(k+1/2)",
             "name": "ap_bnds",
             "out_name": "ap_bnds",
+            "standard_name": "",
             "type": "double",
             "units": "Pa"
         },
@@ -37,6 +41,7 @@
             "long_name": "vertical coordinate formula term: b",
             "name": "b",
             "out_name": "b",
+            "standard_name": "",
             "type": "double",
             "units": ""
         },
@@ -45,6 +50,7 @@
             "long_name": "vertical coordinate formula term: b(k+1/2)",
             "name": "b_bnds",
             "out_name": "b_bnds",
+            "standard_name": "",
             "type": "double",
             "units": ""
         },
@@ -53,6 +59,7 @@
             "long_name": "Sea Floor Depth",
             "name": "depth",
             "out_name": "depth",
+            "standard_name": "",
             "type": "real",
             "units": "m"
         },
@@ -61,6 +68,7 @@
             "long_name": "vertical coordinate formula term: depth_c",
             "name": "depth_c",
             "out_name": "depth_c",
+            "standard_name": "",
             "type": "double",
             "units": "m"
         },
@@ -69,6 +77,7 @@
             "long_name": "Sea Surface Height",
             "name": "eta",
             "out_name": "eta",
+            "standard_name": "",
             "type": "real",
             "units": "m"
         },
@@ -77,6 +86,7 @@
             "long_name": "Sea Surface Height",
             "name": "eta2",
             "out_name": "eta",
+            "standard_name": "",
             "type": "real",
             "units": "m"
         },
@@ -85,6 +95,7 @@
             "long_name": "vertical coordinate formula term: k_c",
             "name": "k_c",
             "out_name": "k_c",
+            "standard_name": "",
             "type": "integer",
             "units": ""
         },
@@ -93,6 +104,7 @@
             "long_name": "vertical coordinate formula term: nsigma",
             "name": "nsigma",
             "out_name": "nsigma",
+            "standard_name": "",
             "type": "integer",
             "units": ""
         },
@@ -101,6 +113,7 @@
             "long_name": "Surface Altitude",
             "name": "orog",
             "out_name": "orog",
+            "standard_name": "",
             "type": "real",
             "units": "m"
         },
@@ -154,6 +167,7 @@
             "long_name": "vertical coordinate formula term: zlev(k)",
             "name": "zlev",
             "out_name": "zlev",
+            "standard_name": "",
             "type": "double",
             "units": "m"
         },
@@ -162,6 +176,7 @@
             "long_name": "vertical coordinate formula term: zlev(k+1/2)",
             "name": "zlev_bnds",
             "out_name": "zlev_bnds",
+            "standard_name": "",
             "type": "double",
             "units": "m"
         }

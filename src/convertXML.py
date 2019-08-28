@@ -42,6 +42,7 @@ c.execute("""create table formulaVar (
         long_name text,
         type      text,
         dimensions text,
+        standard_name text,
         out_name  text,
         units      text)""")
 
