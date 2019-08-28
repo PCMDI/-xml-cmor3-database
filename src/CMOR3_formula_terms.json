@@ -23,6 +23,7 @@
             "long_name": "vertical coordinate formula term: a(k)",
             "name": "a_half",
             "out_name": "a",
+            "standard_name": "",
             "type": "double",
             "units": ""
         },
@@ -49,6 +50,7 @@
             "long_name": "vertical coordinate formula term: ap(k)",
             "name": "ap_half",
             "out_name": "ap",
+            "standard_name": "",
             "type": "double",
             "units": "Pa"
         },
@@ -75,6 +77,7 @@
             "long_name": "vertical coordinate formula term: b(k)",
             "name": "b_half",
             "out_name": "b",
+            "standard_name": "",
             "type": "double",
             "units": ""
         },
