@@ -109,6 +109,7 @@
             "long_name": "vertical coordinate formula term: reference pressure",
             "name": "p0",
             "out_name": "p0",
+            "standard_name": "reference_air_pressure_for_atmosphere_vertical_coordinate",
             "type": "double",
             "units": "Pa"
         },
@@ -117,6 +118,7 @@
             "long_name": "Surface Air Pressure",
             "name": "ps",
             "out_name": "ps",
+            "standard_name": "air_pressure",
             "type": "real",
             "units": "Pa"
         },
@@ -125,6 +127,7 @@
             "long_name": "Surface Air Pressure",
             "name": "ps1",
             "out_name": "ps",
+            "standard_name": "air_pressure",
             "type": "real",
             "units": "Pa"
         },
@@ -133,6 +136,7 @@
             "long_name": "Surface Air Pressure",
             "name": "ps2",
             "out_name": "ps",
+            "standard_name": "air_pressure",
             "type": "real",
             "units": "Pa"
         },
@@ -141,6 +145,7 @@
             "long_name": "pressure at top of model",
             "name": "ptop",
             "out_name": "ptop",
+            "standard_name": "air_pressure_at_top_of_atmosphere",
             "type": "double",
             "units": "Pa"
         },
