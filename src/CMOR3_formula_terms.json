@@ -62,7 +62,7 @@
             "name": "depth_c",
             "out_name": "depth_c",
             "type": "double",
-            "units": ""
+            "units": "m"
         },
         "eta": {
             "dimensions": "longitude latitude time",
@@ -155,7 +155,7 @@
             "name": "zlev",
             "out_name": "zlev",
             "type": "double",
-            "units": ""
+            "units": "m"
         },
         "zlev_bnds": {
             "dimensions": "olevel",
@@ -163,7 +163,7 @@
             "name": "zlev_bnds",
             "out_name": "zlev_bnds",
             "type": "double",
-            "units": ""
+            "units": "m"
         }
     }
 }
