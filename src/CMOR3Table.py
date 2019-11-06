@@ -318,7 +318,8 @@ class CMOR3Table:
                                   fv.type,
                                   fv.dimensions,
                                   fv.out_name,
-                                  fv.units
+                                  fv.units,
+                                  fv.standard_name
                  from formulaVar fv
                  order by fv.name
             """

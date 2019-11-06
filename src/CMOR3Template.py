@@ -51,6 +51,7 @@ FormulaVarTemplateJSON = """
                         "units":       "<units>",
                         "dimensions":  "<dimensions>",
                         "out_name":    "<out_name>",
+                        "standard_name":    "<standard_name>",
                         "type":        "<type>"
                     },
 """
