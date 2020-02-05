@@ -162,7 +162,7 @@ tableDict = { "Amon": { "approxInterval" : "30.00000",
                         "genericLevels"  : ""
                       },
               "Oclim": { "approxInterval" : "30.00000",
-                        "genericLevels"  : "olevel"
+                        "genericLevels"  : "olevel olevhalf"
                       },
               "Oyr": { "approxInterval" : "365.00000",
                         "genericLevels"  : "olevel"
